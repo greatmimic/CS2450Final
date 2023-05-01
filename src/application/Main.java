@@ -176,6 +176,39 @@ public class Main extends Application {
 			searchBar.getParent().requestFocus(); // Remove focus from search bar
 		});
 		
+		
+		//tabs 
+		
+		// Create tabs
+		Tab entmtTab = new Tab("Entertainment");
+		Tab foodTab = new Tab("Food");
+		Tab sportsTab = new Tab("Sports");
+		Tab autoTab = new Tab("Auto");
+		Tab financeTab = new Tab("Finance");
+		Tab fashionTab = new Tab("Fashion");
+
+		
+		// Create TabPane and add tabs to it
+		TabPane tabPane = new TabPane();
+		tabPane.getTabs().addAll(entmtTab, foodTab, sportsTab, autoTab, financeTab, fashionTab);
+		tabPane.setTabMinWidth(80); // Set the minimum width of each tab
+		tabPane.setTabMaxWidth(80); // Set the maximum width of each tab
+		// Set closable property to false for all tabs
+		for (Tab tab : tabPane.getTabs()) {
+		    tab.setClosable(false);
+		}
+		
+		HBox tabPaneBox = new HBox(tabPane);
+		tabPaneBox.setMaxWidth(800); // Can change the width of the tab pane entirely here
+		tabPaneBox.setAlignment(Pos.CENTER);
+
+
+		
+		// Add tabPane and newsGrid to the center of the BorderPane
+		VBox centerBox = new VBox(newsGrid, tabPaneBox);
+		centerBox.setSpacing(20);
+		centerBox.setAlignment(Pos.CENTER);
+		root.setCenter(centerBox);
 
 
 
