@@ -1,5 +1,8 @@
 package application;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -34,17 +37,30 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+	private Image loadImage(String imagePath) {
+	    try {
+	        InputStream imageStream = getClass().getResourceAsStream(imagePath);
+	        if (imageStream == null) {
+	            throw new FileNotFoundException("Resource not found: " + imagePath);
+	        }
+	        return new Image(imageStream);
+	    } catch (FileNotFoundException e) {
+	        System.err.println(e.getMessage());
+	        return null;
+	    }
+	}
+
 	@Override
 	public void start(Stage primaryStage) {
 		BorderPane root = new BorderPane();
-
+		
 		// Header section with Yahoo logo and search bar
 		HBox header = new HBox();
 		header.setPadding(new Insets(20, 0, 0, 0));
 		header.setAlignment(Pos.CENTER);
 		header.setSpacing(0);
 
-		ImageView yahooLogo = new ImageView(new Image("/Images/yahoo_icon.png"));
+		ImageView yahooLogo = new ImageView(loadImage("/Images/yahoo_icon.png"));
 		yahooLogo.setFitWidth(30);
 		yahooLogo.setFitHeight(30);
 		Label yahooText = new Label("Yahoo");
@@ -61,7 +77,7 @@ public class Main extends Application {
 
 
 		//search button
-		ImageView searchIcon = new ImageView(new Image("/Images/search_icon.png"));
+		ImageView searchIcon = new ImageView(loadImage("/Images/search_icon.png"));
 		searchIcon.setFitWidth(20);
 		searchIcon.setFitHeight(20);
 		Button searchButton = new Button("", searchIcon);
@@ -89,7 +105,7 @@ public class Main extends Application {
 		String[][] newsCompanies = {
 				{"CNN", "/Images/cnn_icon.png"},
 				{"BBC", "/Images/bbc_icon.png"},
-				{"FOX", "/Images/fox_icon.png"},
+				//{"FOX", "./Images/fox_icon.png"}, //need fox news icon
 				{"Aol.","/Images/aol_icon.png"} 
 
 		};
@@ -104,7 +120,7 @@ public class Main extends Application {
 		for (int i = 0; i < newsCompanies.length; i++) {
 			
 			String currentNewsCompany = newsCompanies[i][0];
-			ImageView logo = new ImageView(new Image(newsCompanies[i][1]));
+			ImageView logo = new ImageView(loadImage(newsCompanies[i][1]));
 			logo.setFitWidth(50);
 			logo.setFitHeight(50);
 
