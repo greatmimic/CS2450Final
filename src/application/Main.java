@@ -44,7 +44,7 @@ public class Main extends Application {
 		header.setAlignment(Pos.CENTER);
 		header.setSpacing(0);
 
-		ImageView yahooLogo = new ImageView(new Image("E:\\eclipse\\ws\\FinalProjectCS2450\\Images\\yahoo_icon.png"));
+		ImageView yahooLogo = new ImageView(new Image("/Images/yahoo_icon.png"));
 		yahooLogo.setFitWidth(30);
 		yahooLogo.setFitHeight(30);
 		Label yahooText = new Label("Yahoo");
@@ -61,7 +61,7 @@ public class Main extends Application {
 
 
 		//search button
-		ImageView searchIcon = new ImageView(new Image("E:\\eclipse\\ws\\FinalProjectCS2450\\Images\\search_icon.png"));
+		ImageView searchIcon = new ImageView(new Image("/Images/search_icon.png"));
 		searchIcon.setFitWidth(20);
 		searchIcon.setFitHeight(20);
 		Button searchButton = new Button("", searchIcon);
@@ -87,10 +87,10 @@ public class Main extends Application {
 
 		//news companies
 		String[][] newsCompanies = {
-				{"CNN", "E:\\eclipse\\ws\\FinalProjectCS2450\\Images\\cnn_icon.png"},
-				{"BBC", "E:\\eclipse\\ws\\FinalProjectCS2450\\Images\\bbc_icon.png"},
-				{"FOX", "E:\\eclipse\\ws\\FinalProjectCS2450\\Images\\fox_icon.png"},
-				{"Aol.","E:\\eclipse\\ws\\FinalProjectCS2450\\Images\\aol_icon.png"} 
+				{"CNN", "/Images/cnn_icon.png"},
+				{"BBC", "/Images/bbc_icon.png"},
+				{"FOX", "/Images/fox_icon.png"},
+				{"Aol.","/Images/aol_icon.png"} 
 
 		};
 
