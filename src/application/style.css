@@ -32,6 +32,7 @@
     -fx-text-fill: #c40000;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
+    -fx-cursor: hand;
 }
 .news-company-label {
     -fx-font-size: 14px;
@@ -47,4 +48,7 @@
 }
 .logo-button:hover {
     -fx-background-color: #BDBDBD; /* Change the hover background color as desired */
+}
+.ad-banner:hover {
+    -fx-cursor: hand;
 }
