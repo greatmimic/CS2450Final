@@ -24,36 +24,74 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
-
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 //@@@@TODO@@@@
 //Create self scrolling news highlight bar with main, entertainment, sports, finance buttons
-//create tabs for entertainment, sports, auto, finance, food, fashion
-//create fake ad banner in between search bar and news grid
-//create a chart simulation of billboard top 100 somewhere
+//create tabs for entertainment, sports, auto, finance, food, fashion		DONE
+//create fake ad banner in between search bar and news grid       DONE
+//create a chart simulation of billboard top 100 somewhere		
 //create a single area weather forecast (one city)
 //get proper icons for nav buttons
 //create login interface
 
 public class Main extends Application {
 
+	//load image
 	private Image loadImage(String imagePath) {
-	    try {
-	        InputStream imageStream = getClass().getResourceAsStream(imagePath);
-	        if (imageStream == null) {
-	            throw new FileNotFoundException("Resource not found: " + imagePath);
-	        }
-	        return new Image(imageStream);
-	    } catch (FileNotFoundException e) {
-	        System.err.println(e.getMessage());
-	        return null;
-	    }
+		try {
+			InputStream imageStream = getClass().getResourceAsStream(imagePath);
+			if (imageStream == null) {
+				throw new FileNotFoundException("Resource not found: " + imagePath);
+			}
+			return new Image(imageStream);
+		} catch (FileNotFoundException e) {
+			System.err.println(e.getMessage());
+			return null;
+		}
 	}
+	
+	// Populate tab content
+	private HBox createTabContent(String imagePath1, String title1, String imagePath2, String title2) {
+	    ImageView imageView1 = new ImageView(loadImage(imagePath1));
+	    imageView1.setFitWidth(200);
+	    imageView1.setFitHeight(200);
+
+	    Text titleLabel1 = new Text(title1);
+	    titleLabel1.setWrappingWidth(200);
+	    titleLabel1.setTextAlignment(TextAlignment.CENTER);
+	    
+	    VBox content1 = new VBox(imageView1, titleLabel1);
+	    content1.setSpacing(10);
+	    content1.setAlignment(Pos.CENTER);
+	    content1.setPadding(new Insets(20, 0, 0, 0));
+	    
+	    ImageView imageView2 = new ImageView(loadImage(imagePath2));
+	    imageView2.setFitWidth(200);
+	    imageView2.setFitHeight(200);
+
+	    Text titleLabel2 = new Text(title2);
+	    titleLabel2.setWrappingWidth(200);
+	    titleLabel2.setTextAlignment(TextAlignment.CENTER);
+
+	    VBox content2 = new VBox(imageView2, titleLabel2);
+	    content2.setSpacing(10);
+	    content2.setAlignment(Pos.CENTER);
+	    content2.setPadding(new Insets(20, 0, 0, 0)); 
+	    
+	    HBox tabContent = new HBox(content1, content2);
+	    tabContent.setSpacing(20);
+	    tabContent.setAlignment(Pos.CENTER);
+
+	    return tabContent;
+	}
+
 
 	@Override
 	public void start(Stage primaryStage) {
 		BorderPane root = new BorderPane();
-		
+
 		// Header section with Yahoo logo and search bar
 		HBox header = new HBox();
 		header.setPadding(new Insets(20, 0, 0, 0));
@@ -92,12 +130,18 @@ public class Main extends Application {
 		searchBox.getStyleClass().add("search-box");
 		HBox.setMargin(searchBox, new Insets(0, 0, 0, 10)); // Add left margin of 10 pixels
 
+
+		// Handle mouse click events on the BorderPane to remove focus from search bar
+		root.addEventFilter(MouseEvent.MOUSE_CLICKED, (event) -> {
+			searchBar.getParent().requestFocus(); // Remove focus from search bar
+		});
+
+
 		header.getChildren().addAll(yahooLogo, yahooText, searchBox);
-		
 
 
-		//tab pane entertainment, sports, auto, finance, recipes, fashion, 
-		//TabPane newsPane = new TabPane();
+
+
 
 
 
@@ -110,6 +154,8 @@ public class Main extends Application {
 
 		};
 
+
+
 		//table of news grid pane
 		GridPane newsGrid = new GridPane();
 		newsGrid.setHgap(20);
@@ -118,7 +164,7 @@ public class Main extends Application {
 
 		// Step 3: Iterate through the news companies and create a VBox for each
 		for (int i = 0; i < newsCompanies.length; i++) {
-			
+
 			String currentNewsCompany = newsCompanies[i][0];
 			ImageView logo = new ImageView(loadImage(newsCompanies[i][1]));
 			logo.setFitWidth(50);
@@ -126,24 +172,24 @@ public class Main extends Application {
 
 			Button logoButton = new Button("", logo);
 			logoButton.getStyleClass().add("logo-button");
-			
-			
 
-		    VBox newsCompanyBox = new VBox(logoButton); // Use logoButton instead of logo
-		    newsCompanyBox.setAlignment(Pos.CENTER);
 
-		    // Add this code snippet inside the loop where you create the logoButton
-		    logoButton.setOnAction(event -> {
-		        System.out.println("Clicked on " + currentNewsCompany); // Use the local variable here
-		        // Add your desired action here
-		    });
+
+			VBox newsCompanyBox = new VBox(logoButton); // Use logoButton instead of logo
+			newsCompanyBox.setAlignment(Pos.CENTER);
+
+			// Add this code snippet inside the loop where you create the logoButton
+			logoButton.setOnAction(event -> {
+				System.out.println("Clicked on " + currentNewsCompany); // Use the local variable here
+				// Add your desired action here
+			});
 
 			// Step 4: Add each VBox to the GridPane
 			newsGrid.add(newsCompanyBox, i % 3, i / 3); // Change '3' to the desired number of columns
 		}
 
 
-		
+
 		// Navigation bar section with buttons
 		HBox navBox = new HBox();
 		navBox.setPadding(new Insets(10, 0, 10, 0));
@@ -160,25 +206,44 @@ public class Main extends Application {
 		financeButton.getStyleClass().add("nav-button");
 		Button entertainmentButton = new Button("Entertainment");
 		entertainmentButton.getStyleClass().add("nav-button");
+		Button moreButton = new Button("More");
+		moreButton.getStyleClass().add("nav-button");
+		
 
-		navBox.getChildren().addAll(mailButton, newsButton, sportsButton, financeButton, entertainmentButton);
+		navBox.getChildren().addAll(mailButton, newsButton, sportsButton, financeButton, entertainmentButton, moreButton);
+
+
+
+		// Image banner section
+		HBox imageBanner = new HBox();
+		imageBanner.setPadding(new Insets(10, 0, 10, 0));
+		imageBanner.setAlignment(Pos.CENTER);
+		imageBanner.setSpacing(20);
+
+		ImageView bannerImage = new ImageView(loadImage("/Images/ad_banner.png"));
+		bannerImage.setFitHeight(100);
+		bannerImage.setPreserveRatio(true);
+
+		imageBanner.getChildren().add(bannerImage);
+		bannerImage.setOnMouseClicked(event -> {
+			System.out.println("Clicked on ad banner"); // Replace this with your desired action
+		});
+		imageBanner.getStyleClass().add("ad-banner");
+
+
 
 		VBox topSection = new VBox();
-		topSection.getChildren().addAll(header, navBox);
-		
+		topSection.getChildren().addAll(header, navBox, imageBanner);
+
 		root.setTop(topSection);
 		root.setCenter(newsGrid);
-		
 
 
-		// Handle mouse click events on the BorderPane to remove focus from search bar
-		root.addEventFilter(MouseEvent.MOUSE_CLICKED, (event) -> {
-			searchBar.getParent().requestFocus(); // Remove focus from search bar
-		});
-		
-		
+
+	
+
 		//tabs 
-		
+
 		// Create tabs
 		Tab entmtTab = new Tab("Entertainment");
 		Tab foodTab = new Tab("Food");
@@ -187,7 +252,7 @@ public class Main extends Application {
 		Tab financeTab = new Tab("Finance");
 		Tab fashionTab = new Tab("Fashion");
 
-		
+
 		// Create TabPane and add tabs to it
 		TabPane tabPane = new TabPane();
 		tabPane.getTabs().addAll(entmtTab, foodTab, sportsTab, autoTab, financeTab, fashionTab);
@@ -195,18 +260,28 @@ public class Main extends Application {
 		tabPane.setTabMaxWidth(80); // Set the maximum width of each tab
 		// Set closable property to false for all tabs
 		for (Tab tab : tabPane.getTabs()) {
-		    tab.setClosable(false);
+			tab.setClosable(false);
 		}
-		
+
 		HBox tabPaneBox = new HBox(tabPane);
-		tabPaneBox.setMaxWidth(800); // Can change the width of the tab pane entirely here
+		tabPaneBox.setMaxWidth(800);
 		tabPaneBox.setAlignment(Pos.CENTER);
-
-
 		
+		// Tab content
+		entmtTab.setContent(createTabContent("/Images/entmt_1.png", "Writer Strike 2023 Explained", "/Images/entmt_2.png", "Illegal Twitter Upload of 'Super Mario Bros.'"));
+		foodTab.setContent(createTabContent("/Images/food_1.png", "General Mills Recall on Flour Due To Salmonella", "/Images/food_2.png", "How a Burger Ends Up On Your Plate"));
+		sportsTab.setContent(createTabContent("/Images/sports_1.png", "3 Keys To The Series", "/Images/sports_2.png", "PSG Suspends Messi"));
+		autoTab.setContent(createTabContent("/Images/auto_1.png", "List of Cars Under $20K", "/Images/auto_2.png", "Mustang Plows Into U-HAUL Trailer"));
+		financeTab.setContent(createTabContent("/Images/finance_1.png", "Bankrupt Bed Bath & Beyond Seeks Millions From Ocean Carriers", "/Images/finance_2.png", "Starbucks Beats Earnings and Sales. Why the Stock is Down"));
+		fashionTab.setContent(createTabContent("/Images/fashion_1.png", "What's Trending 2023", "/Images/fashion_2.png", "9 Fresh Ways to Wear Jean Shorts for Summer 2023"));
+		
+		
+		
+
+
 		// Add tabPane and newsGrid to the center of the BorderPane
 		VBox centerBox = new VBox(newsGrid, tabPaneBox);
-		centerBox.setSpacing(20);
+		centerBox.setSpacing(40);
 		centerBox.setAlignment(Pos.CENTER);
 		root.setCenter(centerBox);
 
@@ -214,7 +289,7 @@ public class Main extends Application {
 
 
 
-		Scene scene = new Scene(root, 1200, 800);
+		Scene scene = new Scene(root, 1600, 1000);
 		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
 		primaryStage.setTitle("Yahoo");
