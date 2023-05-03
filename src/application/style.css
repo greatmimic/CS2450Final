@@ -52,3 +52,13 @@
 .ad-banner:hover {
     -fx-cursor: hand;
 }
+
+.tab-pane .tab-header-background {
+    -fx-background-color: transparent;
+}
+
+.tab-pane .tab-header-area .headers-region .tab {
+    -fx-padding: 10px 0;
+    -fx-focus-color: transparent;
+}
+
