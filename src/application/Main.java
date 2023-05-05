@@ -26,6 +26,10 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 
 //@@@@TODO@@@@
 //Create self scrolling news highlight bar with main, entertainment, sports, finance buttons
@@ -35,6 +39,7 @@ import javafx.scene.text.TextAlignment;
 //create a single area weather forecast (one city)
 //get proper icons for nav buttons
 //create login interface
+//edit onAction button for news grid to open actual news website links		DONE
 
 public class Main extends Application {
 
@@ -51,40 +56,57 @@ public class Main extends Application {
 			return null;
 		}
 	}
-	
+
+	//Get news company url from icon
+	private String getNewsCompanyUrl(String newsCompanyName) {
+		switch (newsCompanyName) {
+		case "CNN":
+			return "https://www.cnn.com";
+		case "BBC":
+			return "https://www.bbc.com";
+		case "FOX":
+			return "https://www.foxnews.com";
+		case "Aol.":
+			return "https://www.aol.com";
+		default:
+			return "";
+		}
+	}
+
+
 	// Populate tab content
 	private HBox createTabContent(String imagePath1, String title1, String imagePath2, String title2) {
-	    ImageView imageView1 = new ImageView(loadImage(imagePath1));
-	    imageView1.setFitWidth(200);
-	    imageView1.setFitHeight(200);
+		ImageView imageView1 = new ImageView(loadImage(imagePath1));
+		imageView1.setFitWidth(200);
+		imageView1.setFitHeight(200);
 
-	    Text titleLabel1 = new Text(title1);
-	    titleLabel1.setWrappingWidth(200);
-	    titleLabel1.setTextAlignment(TextAlignment.CENTER);
-	    
-	    VBox content1 = new VBox(imageView1, titleLabel1);
-	    content1.setSpacing(10);
-	    content1.setAlignment(Pos.CENTER);
-	    content1.setPadding(new Insets(20, 0, 0, 0));
-	    
-	    ImageView imageView2 = new ImageView(loadImage(imagePath2));
-	    imageView2.setFitWidth(200);
-	    imageView2.setFitHeight(200);
+		Text titleLabel1 = new Text(title1);
+		titleLabel1.setWrappingWidth(200);
+		titleLabel1.setTextAlignment(TextAlignment.CENTER);
 
-	    Text titleLabel2 = new Text(title2);
-	    titleLabel2.setWrappingWidth(200);
-	    titleLabel2.setTextAlignment(TextAlignment.CENTER);
+		VBox content1 = new VBox(imageView1, titleLabel1);
+		content1.setSpacing(10);
+		content1.setAlignment(Pos.CENTER);
+		content1.setPadding(new Insets(20, 0, 0, 0));
 
-	    VBox content2 = new VBox(imageView2, titleLabel2);
-	    content2.setSpacing(10);
-	    content2.setAlignment(Pos.CENTER);
-	    content2.setPadding(new Insets(20, 0, 0, 0)); 
-	    
-	    HBox tabContent = new HBox(content1, content2);
-	    tabContent.setSpacing(20);
-	    tabContent.setAlignment(Pos.CENTER);
+		ImageView imageView2 = new ImageView(loadImage(imagePath2));
+		imageView2.setFitWidth(200);
+		imageView2.setFitHeight(200);
 
-	    return tabContent;
+		Text titleLabel2 = new Text(title2);
+		titleLabel2.setWrappingWidth(200);
+		titleLabel2.setTextAlignment(TextAlignment.CENTER);
+
+		VBox content2 = new VBox(imageView2, titleLabel2);
+		content2.setSpacing(10);
+		content2.setAlignment(Pos.CENTER);
+		content2.setPadding(new Insets(20, 0, 0, 0)); 
+
+		HBox tabContent = new HBox(content1, content2);
+		tabContent.setSpacing(20);
+		tabContent.setAlignment(Pos.CENTER);
+
+		return tabContent;
 	}
 
 
@@ -147,10 +169,10 @@ public class Main extends Application {
 
 		//news companies
 		String[][] newsCompanies = {
-				{"CNN", "/Images/cnn_icon.png"},
-				{"BBC", "/Images/bbc_icon.png"},
-				//{"FOX", "./Images/fox_icon.png"}, //need fox news icon
-				{"Aol.","/Images/aol_icon.png"} 
+				{"CNN", "/Images/cnn_icon.png", "https://www.cnn.com"},
+				{"BBC", "/Images/bbc_icon.png", "https://www.bbc.com"},
+				{"FOX", "/Images/fox_icon.png", "https://www.foxnews.com"}, 
+				{"Aol.","/Images/aol_icon.png", "https://www.aol.com"} 
 
 		};
 
@@ -180,8 +202,9 @@ public class Main extends Application {
 
 			// Add this code snippet inside the loop where you create the logoButton
 			logoButton.setOnAction(event -> {
+				String newsCompanyUrl = getNewsCompanyUrl(currentNewsCompany);
 				System.out.println("Clicked on " + currentNewsCompany); // Use the local variable here
-				// Add your desired action here
+				getHostServices().showDocument(newsCompanyUrl);
 			});
 
 			// Step 4: Add each VBox to the GridPane
@@ -208,7 +231,7 @@ public class Main extends Application {
 		entertainmentButton.getStyleClass().add("nav-button");
 		Button moreButton = new Button("More");
 		moreButton.getStyleClass().add("nav-button");
-		
+
 
 		navBox.getChildren().addAll(mailButton, newsButton, sportsButton, financeButton, entertainmentButton, moreButton);
 
@@ -240,7 +263,7 @@ public class Main extends Application {
 
 
 
-	
+
 
 		//tabs 
 
@@ -266,7 +289,7 @@ public class Main extends Application {
 		HBox tabPaneBox = new HBox(tabPane);
 		tabPaneBox.setMaxWidth(800);
 		tabPaneBox.setAlignment(Pos.CENTER);
-		
+
 		// Tab content
 		entmtTab.setContent(createTabContent("/Images/entmt_1.png", "Writer Strike 2023 Explained", "/Images/entmt_2.png", "Illegal Twitter Upload of 'Super Mario Bros.'"));
 		foodTab.setContent(createTabContent("/Images/food_1.png", "General Mills Recall on Flour Due To Salmonella", "/Images/food_2.png", "How a Burger Ends Up On Your Plate"));
@@ -274,9 +297,9 @@ public class Main extends Application {
 		autoTab.setContent(createTabContent("/Images/auto_1.png", "List of Cars Under $20K", "/Images/auto_2.png", "Mustang Plows Into U-HAUL Trailer"));
 		financeTab.setContent(createTabContent("/Images/finance_1.png", "Bankrupt Bed Bath & Beyond Seeks Millions From Ocean Carriers", "/Images/finance_2.png", "Starbucks Beats Earnings and Sales. Why the Stock is Down"));
 		fashionTab.setContent(createTabContent("/Images/fashion_1.png", "What's Trending 2023", "/Images/fashion_2.png", "9 Fresh Ways to Wear Jean Shorts for Summer 2023"));
-		
-		
-		
+
+
+
 
 
 		// Add tabPane and newsGrid to the center of the BorderPane
