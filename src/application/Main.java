@@ -7,15 +7,21 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -83,6 +89,7 @@ public class Main extends Application {
 	}
 
 
+
 	// Populate tab content
 	private HBox createTabContent(String imagePath1, String title1, String imagePath2, String title2) {
 		ImageView imageView1 = new ImageView(loadImage(imagePath1));
@@ -133,8 +140,7 @@ public class Main extends Application {
 		ImageView yahooLogo = new ImageView(loadImage("/Images/yahoo_logo.png"));
 		yahooLogo.setFitWidth(110);
 		yahooLogo.setFitHeight(50);
-		//Label yahooText = new Label("Yahoo");
-		//yahooText.getStyleClass().add("yahoo-text");
+
 
 		TextField searchBar = new TextField();
 		searchBar.setPrefWidth(600);
@@ -147,13 +153,14 @@ public class Main extends Application {
 		});
 
 
+
 		//search button
 		ImageView searchIcon = new ImageView(loadImage("/Images/search_icon.png"));
 		searchIcon.setFitWidth(20);
 		searchIcon.setFitHeight(20);
 		Button searchButton = new Button("", searchIcon);
-		searchButton.setPrefHeight(16);
-		searchButton.setPrefWidth(16);
+		searchButton.setPrefHeight(25);
+		searchButton.setPrefWidth(25);
 		searchButton.getStyleClass().add("search-button");
 
 
@@ -165,9 +172,9 @@ public class Main extends Application {
 
 
 		// Handle mouse click events on the BorderPane to remove focus from search bar
-//		root.addEventFilter(MouseEvent.MOUSE_CLICKED, (event) -> {
-//			searchBar.getParent().requestFocus(); // Remove focus from search bar
-//		});
+		//		root.addEventFilter(MouseEvent.MOUSE_CLICKED, (event) -> {
+		//			searchBar.getParent().requestFocus(); // Remove focus from search bar
+		//		});
 
 
 		header.getChildren().addAll(yahooLogo,  searchBox);
@@ -184,9 +191,9 @@ public class Main extends Application {
 				{"Aol.","/Images/aol_icon.png", "https://www.aol.com"}, 
 				{"NBC", "/Images/nbc_icon.png", "https://www.nbcnews.com"},
 				{"CBS", "/Images/cbs_icon.png", "https://cbsnews.com"},
-				
-				};
-		
+
+		};
+
 		//table of news grid pane
 		GridPane newsGrid = new GridPane();
 		newsGrid.setHgap(20);
@@ -219,30 +226,36 @@ public class Main extends Application {
 			// Step 4: Add each VBox to the GridPane
 			newsGrid.add(newsCompanyBox, i % 3, i / 3); // Change '3' to the desired number of columns
 		}
-		
+
 		//Login Interface
 		VBox signInBox = new VBox();
 		signInBox.setAlignment(Pos.CENTER);
-		
+
 		Button signInButton = new Button("Sign In");
 		signInButton.setPrefHeight(40);
 		signInButton.setPrefWidth(150);
-		
+
 		signInButton.setOnAction(e->{
 			showLoginInterface(signInBox);
 		});
-		
-		
+
+
 		signInBox.getChildren().add(signInButton);
-		
-		
+
+///////////////////////////////////////////////////////////////////////////////NAVIGATION BUTTONS///////////////////////////////////////////////////////////////////////////
 
 		// Navigation bar section with buttons
 		HBox navBox = new HBox();
 		navBox.setPadding(new Insets(10, 0, 10, 0));
 		navBox.setAlignment(Pos.CENTER);
 		navBox.setSpacing(20);
+		ImageView homeIcon = new ImageView(loadImage("/Images/home_icon.png"));
+		homeIcon.setFitWidth(20);
+		homeIcon.setFitHeight(20);
 
+
+		Button homeButton = new Button("Home", homeIcon);
+		homeButton.getStyleClass().add("nav-button");
 		Button mailButton = new Button("Mail");
 		mailButton.getStyleClass().add("nav-button");
 		Button newsButton = new Button("News");
@@ -253,14 +266,19 @@ public class Main extends Application {
 		financeButton.getStyleClass().add("nav-button");
 		Button entertainmentButton = new Button("Entertainment");
 		entertainmentButton.getStyleClass().add("nav-button");
-		Button moreButton = new Button("More");
+		MenuButton moreButton = new MenuButton("More...");
 		moreButton.getStyleClass().add("nav-button");
+		createDropdownMenu(moreButton);
+		
 
 
-		navBox.getChildren().addAll(mailButton, newsButton, sportsButton, financeButton, entertainmentButton, moreButton);
+		navBox.getChildren().addAll(homeButton, mailButton, newsButton, sportsButton, financeButton, entertainmentButton, moreButton);
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+///////////////////////////////////////////////////////////////////////////////AD BANNER///////////////////////////////////////////////////////////////////////////////		
+		
+		
 		// Image banner section
 		HBox imageBanner = new HBox();
 		imageBanner.setPadding(new Insets(10, 0, 10, 0));
@@ -270,12 +288,12 @@ public class Main extends Application {
 		ImageView bannerImage = new ImageView(loadImage("/Images/ad_banner.png"));
 		bannerImage.setFitHeight(100);
 		bannerImage.setPreserveRatio(true);
-		
+
 		imageBanner.getChildren().add(bannerImage);
 		bannerImage.setOnMouseClicked(event -> {
 			System.out.println("Clicked on ad banner"); // Replace this with your desired action
 		});
-		
+
 		imageBanner.getStyleClass().add("ad-banner");
 
 
@@ -285,9 +303,9 @@ public class Main extends Application {
 
 		mainLayout.setTop(topSection);
 		mainLayout.setCenter(root);
-		
 
-		//tabs 
+
+///////////////////////////////////////////////////////////////////////////////TABS/////////////////////////////////////////////////////////////////////////////////
 
 		// Create tabs
 		Tab entmtTab = new Tab("Entertainment");
@@ -320,7 +338,7 @@ public class Main extends Application {
 		financeTab.setContent(createTabContent("/Images/finance_1.png", "Bankrupt Bed Bath & Beyond Seeks Millions From Ocean Carriers", "/Images/finance_2.png", "Starbucks Beats Earnings and Sales. Why the Stock is Down"));
 		fashionTab.setContent(createTabContent("/Images/fashion_1.png", "What's Trending 2023", "/Images/fashion_2.png", "9 Fresh Ways to Wear Jean Shorts for Summer 2023"));
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -330,14 +348,14 @@ public class Main extends Application {
 		centerBox.setAlignment(Pos.CENTER);
 		centerBox.setTranslateY(100);
 		centerBox.setTranslateX(100);
-		
+
 		StackPane mainCenter = new StackPane(centerBox);
 		mainCenter.setAlignment(Pos.CENTER);
 		//root.setCenter(mainCenter);
-		
+
 		//root.setTranslateX(400);
-		
-		
+
+
 		// Set column constraints for the GridPane to distribute space evenly
 		ColumnConstraints col1 = new ColumnConstraints();
 		col1.setPercentWidth(50);
@@ -369,71 +387,105 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 	private void showLoginInterface(VBox signInBox) {
-	    // Create login components
-	    Label usernameLabel = new Label("Username:");
-	    TextField usernameField = new TextField();
-	    Label passwordLabel = new Label("Password:");
-	    PasswordField passwordField = new PasswordField();
-	    Button loginButton = new Button("Login");
-	    Button foldButton = new Button("Fold");
-	    
-	    //textfield sizes
-	    usernameField.setMaxWidth(200);
-	    passwordField.setMaxWidth(200);
+		// Create login components
+		Label usernameLabel = new Label("Username:");
+		TextField usernameField = new TextField();
+		Label passwordLabel = new Label("Password:");
+		PasswordField passwordField = new PasswordField();
+		Button loginButton = new Button("Login");
+		Button foldButton = new Button("Fold");
 
-	    // Handle login button click
-	    loginButton.setOnAction(e -> {
-	        String username = usernameField.getText();
-	        String password = passwordField.getText();
-	        
-	        // Perform login validation here
-	        
-	        // Add pop up label to show login successful or unsuccessful msg
-	        // also do not show sign in button again. instead show Hello, User00
-	        if (isValidLogin(username, password)) {
-	            System.out.println("Login successful");
-	            // Perform further actions after successful login
-	            
-	            // Clear the login interface and restore the "Sign In" button
-	            clearLoginInterface(signInBox);
-	        } else {
-	            System.out.println("Invalid username or password");
-	            // Display error message or perform further actions
-	        }
-	    });
-	    
-	    // Handle fold button click
-	    foldButton.setOnAction(e -> {
-	        // Clear the login interface and restore the "Sign In" button
-	        clearLoginInterface(signInBox);
-	    });
+		//textfield sizes
+		usernameField.setMaxWidth(200);
+		passwordField.setMaxWidth(200);
 
-	    // Create layout for the login interface
-	    VBox loginLayout = new VBox(10);
-	    loginLayout.setAlignment(Pos.CENTER);
-	    loginLayout.setPadding(new Insets(20));
-	    loginLayout.getChildren().addAll(usernameLabel, usernameField, passwordLabel, passwordField, loginButton, foldButton);
+		// Handle login button click
+		loginButton.setOnAction(e -> {
+			String username = usernameField.getText();
+			String password = passwordField.getText();
 
-	    // Replace the content of signInBox with the login layout
-	    signInBox.getChildren().clear();
-	    signInBox.getChildren().add(loginLayout);
+			// Perform login validation here
+
+			// Add pop up label to show login successful or unsuccessful msg
+			// also do not show sign in button again. instead show Hello, User00
+			if (isValidLogin(username, password)) {
+				// Create welcome message label
+				Label welcomeLabel = new Label("Welcome, " + username + "!");
+				welcomeLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+
+				// Create "My Account" button
+				Button myAccountButton = new Button("My Account");
+				myAccountButton.setStyle("-fx-font-weight: bold; -fx-font-size: 12px;");
+
+				// Add action for "My Account" hyperlink
+				myAccountButton.setOnAction(event -> {
+					// Perform actions when "My Account" is clicked
+					System.out.println("My Account clicked");
+
+				});
+
+				Button logOutButton = new Button("Log Out");
+
+				logOutButton.setOnAction(event2 -> {
+					clearLoginInterface(signInBox);
+				});
+
+				// Create layout for the welcome message and "My Account" hyperlink
+				VBox welcomeLayout = new VBox(10);
+				welcomeLayout.setAlignment(Pos.CENTER);
+				welcomeLayout.setPadding(new Insets(20));
+				welcomeLayout.getChildren().addAll(welcomeLabel, myAccountButton, logOutButton);
+
+				// Replace the content of signInBox with the welcome layout
+				signInBox.getChildren().clear();
+				signInBox.getChildren().add(welcomeLayout);
+			} else {
+				System.out.println("Invalid username or password");
+				// Display error message or perform further actions
+			}
+		});
+
+		// Handle fold button click
+		foldButton.setOnAction(e -> {
+			// Clear the login interface and restore the "Sign In" button
+			clearLoginInterface(signInBox);
+		});
+
+		// Create layout for the login interface
+		VBox loginLayout = new VBox(10);
+		loginLayout.setAlignment(Pos.CENTER);
+		loginLayout.setPadding(new Insets(20));
+		loginLayout.getChildren().addAll(usernameLabel, usernameField, passwordLabel, passwordField, loginButton, foldButton);
+
+		// Replace the content of signInBox with the login layout
+		signInBox.getChildren().clear();
+		signInBox.getChildren().add(loginLayout);
 	}
 	private boolean isValidLogin(String username, String password) {
-	    // Implement your login validation logic here
-	    // Return true if the login is valid, false otherwise
-	    return username.equals("admin") && password.equals("password");
+		// Implement your login validation logic here
+		// Return true if the login is valid, false otherwise
+		return username.equals("admin") && password.equals("password");
 	}
 	private void clearLoginInterface(VBox signInBox) {
-	    signInBox.getChildren().clear();
-	    Button signInButton = new Button("Sign In");
-	    signInButton.setPrefHeight(40);
-	    signInButton.setPrefWidth(150);
-	    signInButton.setOnAction(e -> {
-	        showLoginInterface(signInBox);
-	    });
-	    signInBox.getChildren().add(signInButton);
+		signInBox.getChildren().clear();
+		Button signInButton = new Button("Sign In");
+		signInButton.setPrefHeight(40);
+		signInButton.setPrefWidth(150);
+		signInButton.setOnAction(e -> {
+			showLoginInterface(signInBox);
+		});
+		signInBox.getChildren().add(signInButton);
 	}
+	//////////////////////////////////////////////////////////////ADD MORE MENU ITEM AND GET CSS COLORS TO MATCH WITH OVERALL SCENE/////////////////////////////////
+	private void createDropdownMenu(MenuButton moreButton) {
+	    MenuItem accountItem = new MenuItem("Accounts");
+	    MenuItem settingsItem = new MenuItem("Settings");
+	    MenuItem helpItem = new MenuItem("Help");
+
+	    moreButton.getItems().addAll(accountItem, settingsItem, helpItem);
+	}
+
 
 }
