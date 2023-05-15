@@ -4,22 +4,27 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
@@ -68,6 +73,10 @@ public class Main extends Application {
 			return "https://www.foxnews.com";
 		case "Aol.":
 			return "https://www.aol.com";
+		case "NBC":
+			return "https://www.nbcnews.com";
+		case "CBS":
+			return "https://www.cbsnews.com";
 		default:
 			return "";
 		}
@@ -112,7 +121,8 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		BorderPane root = new BorderPane();
+		BorderPane mainLayout = new BorderPane();
+		GridPane root = new GridPane();
 
 		// Header section with Yahoo logo and search bar
 		HBox header = new HBox();
@@ -120,17 +130,18 @@ public class Main extends Application {
 		header.setAlignment(Pos.CENTER);
 		header.setSpacing(0);
 
-		ImageView yahooLogo = new ImageView(loadImage("/Images/yahoo_icon.png"));
-		yahooLogo.setFitWidth(30);
-		yahooLogo.setFitHeight(30);
-		Label yahooText = new Label("Yahoo");
-		yahooText.getStyleClass().add("yahoo-text");
+		ImageView yahooLogo = new ImageView(loadImage("/Images/yahoo_logo.png"));
+		yahooLogo.setFitWidth(110);
+		yahooLogo.setFitHeight(50);
+		//Label yahooText = new Label("Yahoo");
+		//yahooText.getStyleClass().add("yahoo-text");
 
 		TextField searchBar = new TextField();
 		searchBar.setPrefWidth(600);
 		searchBar.setPrefHeight(30);
 		searchBar.setPromptText("Search for news, stocks, and more");
 		searchBar.setFocusTraversable(false); // remove default focus
+		searchBar.setDisable(false);
 		searchBar.setOnMouseClicked(event -> {
 			searchBar.requestFocus();
 		});
@@ -159,9 +170,7 @@ public class Main extends Application {
 		});
 
 
-		header.getChildren().addAll(yahooLogo, yahooText, searchBox);
-
-
+		header.getChildren().addAll(yahooLogo,  searchBox);
 
 
 
@@ -172,12 +181,12 @@ public class Main extends Application {
 				{"CNN", "/Images/cnn_icon.png", "https://www.cnn.com"},
 				{"BBC", "/Images/bbc_icon.png", "https://www.bbc.com"},
 				{"FOX", "/Images/fox_icon.png", "https://www.foxnews.com"}, 
-				{"Aol.","/Images/aol_icon.png", "https://www.aol.com"} 
-
-		};
-
-
-
+				{"Aol.","/Images/aol_icon.png", "https://www.aol.com"}, 
+				{"NBC", "/Images/nbc_icon.png", "https://www.nbcnews.com"},
+				{"CBS", "/Images/cbs_icon.png", "https://cbsnews.com"},
+				
+				};
+		
 		//table of news grid pane
 		GridPane newsGrid = new GridPane();
 		newsGrid.setHgap(20);
@@ -189,8 +198,8 @@ public class Main extends Application {
 
 			String currentNewsCompany = newsCompanies[i][0];
 			ImageView logo = new ImageView(loadImage(newsCompanies[i][1]));
-			logo.setFitWidth(50);
-			logo.setFitHeight(50);
+			logo.setFitWidth(80);
+			logo.setFitHeight(80);
 
 			Button logoButton = new Button("", logo);
 			logoButton.getStyleClass().add("logo-button");
@@ -210,7 +219,39 @@ public class Main extends Application {
 			// Step 4: Add each VBox to the GridPane
 			newsGrid.add(newsCompanyBox, i % 3, i / 3); // Change '3' to the desired number of columns
 		}
-
+		
+		//Login Interface
+		VBox signInBox = new VBox();
+		signInBox.setAlignment(Pos.CENTER);
+		
+		Button signInButton = new Button("Sign In");
+		signInButton.setPrefHeight(40);
+		signInButton.setPrefWidth(150);
+		
+		signInButton.setOnAction(e->{
+			showLoginInterface(signInBox);
+		});
+		
+		
+		signInBox.getChildren().add(signInButton);
+		
+		
+		
+		
+		//root.setRight(signInBox);
+		
+		//AnchorPane signInArea = new AnchorPane();
+		//signInArea.setMinSize(200, 200);  
+		//signInArea.setMaxSize(200, 200); 
+		//signInArea.getChildren().add(signInBox);
+		//AnchorPane.setTopAnchor(signInBox, 5.0);
+		//AnchorPane.setRightAnchor(signInBox, 30.0);
+		//signInArea.setTranslateY(-400);
+		//signInArea.setTranslateX(100);
+		//root.setRight(signInArea);
+		
+		
+		
 
 
 		// Navigation bar section with buttons
@@ -246,11 +287,12 @@ public class Main extends Application {
 		ImageView bannerImage = new ImageView(loadImage("/Images/ad_banner.png"));
 		bannerImage.setFitHeight(100);
 		bannerImage.setPreserveRatio(true);
-
+		
 		imageBanner.getChildren().add(bannerImage);
 		bannerImage.setOnMouseClicked(event -> {
 			System.out.println("Clicked on ad banner"); // Replace this with your desired action
 		});
+		
 		imageBanner.getStyleClass().add("ad-banner");
 
 
@@ -258,12 +300,9 @@ public class Main extends Application {
 		VBox topSection = new VBox();
 		topSection.getChildren().addAll(header, navBox, imageBanner);
 
-		root.setTop(topSection);
-		root.setCenter(newsGrid);
-
-
-
-
+		mainLayout.setTop(topSection);
+		mainLayout.setCenter(root);
+		
 
 		//tabs 
 
@@ -306,13 +345,37 @@ public class Main extends Application {
 		VBox centerBox = new VBox(newsGrid, tabPaneBox);
 		centerBox.setSpacing(40);
 		centerBox.setAlignment(Pos.CENTER);
-		root.setCenter(centerBox);
+		centerBox.setTranslateY(100);
+		centerBox.setTranslateX(100);
+		
+		StackPane mainCenter = new StackPane(centerBox);
+		mainCenter.setAlignment(Pos.CENTER);
+		//root.setCenter(mainCenter);
+		
+		//root.setTranslateX(400);
+		
+		
+		// Set column constraints for the GridPane to distribute space evenly
+		ColumnConstraints col1 = new ColumnConstraints();
+		col1.setPercentWidth(50);
+
+		ColumnConstraints col2 = new ColumnConstraints();
+		col2.setPercentWidth(50);
+
+		root.getColumnConstraints().addAll(col1, col2);
+
+		// Add mainCenter to the first column of the GridPane
+		GridPane.setConstraints(mainCenter, 0, 0);
+
+		// Add signInArea to the second column of the GridPane
+		GridPane.setConstraints(signInBox, 1, 0);
+
+		root.getChildren().addAll(mainCenter, signInBox);
 
 
 
 
-
-		Scene scene = new Scene(root, 1600, 1000);
+		Scene scene = new Scene(mainLayout, 1920, 1080);
 		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
 		primaryStage.setTitle("Yahoo");
@@ -322,6 +385,68 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	private void showLoginInterface(VBox signInBox) {
+	    // Create login components
+	    Label usernameLabel = new Label("Username:");
+	    TextField usernameField = new TextField();
+	    Label passwordLabel = new Label("Password:");
+	    PasswordField passwordField = new PasswordField();
+	    Button loginButton = new Button("Login");
+	    Button foldButton = new Button("Fold");
+
+	    // Handle login button click
+	    loginButton.setOnAction(e -> {
+	        String username = usernameField.getText();
+	        String password = passwordField.getText();
+	        
+	        // Perform login validation here
+	        
+	        // Add pop up label to show login successful or unsuccessful msg
+	        // also do not show sign in button again. instead show Hello, User00
+	        if (isValidLogin(username, password)) {
+	            System.out.println("Login successful");
+	            // Perform further actions after successful login
+	            
+	            // Clear the login interface and restore the "Sign In" button
+	            clearLoginInterface(signInBox);
+	        } else {
+	            System.out.println("Invalid username or password");
+	            // Display error message or perform further actions
+	        }
+	    });
+	    
+	    // Handle fold button click
+	    foldButton.setOnAction(e -> {
+	        // Clear the login interface and restore the "Sign In" button
+	        clearLoginInterface(signInBox);
+	    });
+
+	    // Create layout for the login interface
+	    VBox loginLayout = new VBox(10);
+	    loginLayout.setAlignment(Pos.CENTER);
+	    loginLayout.setPadding(new Insets(20));
+	    loginLayout.getChildren().addAll(usernameLabel, usernameField, passwordLabel, passwordField, loginButton, foldButton);
+
+	    // Replace the content of signInBox with the login layout
+	    signInBox.getChildren().clear();
+	    signInBox.getChildren().add(loginLayout);
+	}
+	private boolean isValidLogin(String username, String password) {
+	    // Implement your login validation logic here
+	    // Return true if the login is valid, false otherwise
+	    return username.equals("admin") && password.equals("password");
+	}
+	private void clearLoginInterface(VBox signInBox) {
+	    signInBox.getChildren().clear();
+	    Button signInButton = new Button("Sign In");
+	    signInButton.setPrefHeight(40);
+	    signInButton.setPrefWidth(150);
+	    signInButton.setOnAction(e -> {
+	        showLoginInterface(signInBox);
+	    });
+	    signInBox.getChildren().add(signInButton);
 	}
 
 }
