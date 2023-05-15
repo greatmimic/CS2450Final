@@ -4,14 +4,10 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -21,25 +17,20 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
+import javafx.scene.web.*;
+
+
+
+
 
 
 //@@@@TODO@@@@
@@ -88,6 +79,9 @@ public class Main extends Application {
 		}
 	}
 
+	private GridPane newsGrid;
+	private TabPane tabPane;
+	private VBox signInBox;
 
 
 	// Populate tab content
@@ -180,8 +174,28 @@ public class Main extends Application {
 		header.getChildren().addAll(yahooLogo,  searchBox);
 
 
+		///////////////////////////////////////////////////////////////////////////////NEWS GRID////////////////////////////////////
 
-
+		WebView webView = new WebView();
+		WebEngine webEngine = webView.getEngine();
+		StackPane webViewLayout = new StackPane();
+		webViewLayout.getChildren().add(webView);
+		
+		ImageView closeIcon = new ImageView(loadImage("/Images/close_icon.png"));
+		Button closeButton = new Button("", closeIcon);
+		webViewLayout.getChildren().add(closeButton);
+		closeButton.setVisible(false);
+		closeButton.setTranslateX(1015);
+		closeButton.setTranslateY(-360);
+		
+		
+		
+		// Initially webView is not visible
+		root.getChildren().add(webViewLayout);
+		webView.setVisible(false);
+		webView.setPrefSize(1280, 720);
+		webView.setTranslateX(500);
+		webView.setTranslateY(-30);
 
 		//news companies
 		String[][] newsCompanies = {
@@ -195,12 +209,14 @@ public class Main extends Application {
 		};
 
 		//table of news grid pane
-		GridPane newsGrid = new GridPane();
+		newsGrid = new GridPane();
 		newsGrid.setHgap(20);
 		newsGrid.setVgap(20);
 		newsGrid.setAlignment(Pos.CENTER);
 
-		// Step 3: Iterate through the news companies and create a VBox for each
+
+
+		// Iterate through the news companies and create a VBox for each
 		for (int i = 0; i < newsCompanies.length; i++) {
 
 			String currentNewsCompany = newsCompanies[i][0];
@@ -216,19 +232,47 @@ public class Main extends Application {
 			VBox newsCompanyBox = new VBox(logoButton); // Use logoButton instead of logo
 			newsCompanyBox.setAlignment(Pos.CENTER);
 
-			// Add this code snippet inside the loop where you create the logoButton
+
 			logoButton.setOnAction(event -> {
 				String newsCompanyUrl = getNewsCompanyUrl(currentNewsCompany);
-				System.out.println("Clicked on " + currentNewsCompany); // Use the local variable here
-				getHostServices().showDocument(newsCompanyUrl);
+				webEngine.load(newsCompanyUrl); // Load the web page in the WebView
+				webView.setVisible(true);
+				webView.toFront();
+				setComponentsVisibility(false);
+				closeButton.setVisible(true);
+				webViewLayout.setVisible(true);
+			    webViewLayout.setManaged(true);
+
 			});
 
-			// Step 4: Add each VBox to the GridPane
-			newsGrid.add(newsCompanyBox, i % 3, i / 3); // Change '3' to the desired number of columns
+			// Add each VBox to the GridPane
+			newsGrid.add(newsCompanyBox, i % 3, i / 3); 
 		}
 
+		///////////////////////////////////////////////////CLOSE BUTTON FOR WEBVIEW//////////////////////////////////////////////////////////
+
+		
+		
+		
+		// Set visibility back to true when close button is clicked
+		closeButton.setOnMouseClicked(e->{
+			// Hide webView 
+			webViewLayout.setVisible(false);
+			webViewLayout.setManaged(false);
+			// Show other controls
+			setComponentsVisibility(true);
+			
+			System.out.println("button working");
+		});
+		
+		
+
+
+
+		///////////////////////////////////////////////////////////////////////////////LOGIN INTERFACE//////////////////////////////
+
 		//Login Interface
-		VBox signInBox = new VBox();
+		signInBox = new VBox();
 		signInBox.setAlignment(Pos.CENTER);
 
 		Button signInButton = new Button("Sign In");
@@ -242,7 +286,25 @@ public class Main extends Application {
 
 		signInBox.getChildren().add(signInButton);
 
-///////////////////////////////////////////////////////////////////////////////NAVIGATION BUTTONS///////////////////////////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////////////////////MAKE HOMEPAGE LABEL/////////////////////////////////////////////////////////////////////////		
+
+		// Create the "Make Homepage" label
+		Button makeHomepage = new Button("Make Homepage");
+		makeHomepage.getStyleClass().add("make-homepage");
+
+		// Create a layout container to hold the label
+		StackPane makeHomepagePane = new StackPane(makeHomepage);
+		makeHomepagePane.setAlignment(Pos.TOP_RIGHT);
+		makeHomepagePane.setPadding(new Insets(10));
+		makeHomepagePane.setTranslateY(-200);
+		makeHomepagePane.setTranslateX(-50);
+
+
+
+
+
+
+		///////////////////////////////////////////////////////////////////////////////NAVIGATION BUTTONS///////////////////////////////////////////////////////////////////////////
 
 		// Navigation bar section with buttons
 		HBox navBox = new HBox();
@@ -269,16 +331,16 @@ public class Main extends Application {
 		MenuButton moreButton = new MenuButton("More...");
 		moreButton.getStyleClass().add("nav-button");
 		createDropdownMenu(moreButton);
-		
+
 
 
 		navBox.getChildren().addAll(homeButton, mailButton, newsButton, sportsButton, financeButton, entertainmentButton, moreButton);
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////AD BANNER///////////////////////////////////////////////////////////////////////////////		
-		
-		
+		///////////////////////////////////////////////////////////////////////////////AD BANNER///////////////////////////////////////////////////////////////////////////////		
+
+
 		// Image banner section
 		HBox imageBanner = new HBox();
 		imageBanner.setPadding(new Insets(10, 0, 10, 0));
@@ -288,24 +350,20 @@ public class Main extends Application {
 		ImageView bannerImage = new ImageView(loadImage("/Images/ad_banner.png"));
 		bannerImage.setFitHeight(100);
 		bannerImage.setPreserveRatio(true);
+		bannerImage.getStyleClass().add("ad-banner");
 
 		imageBanner.getChildren().add(bannerImage);
-		bannerImage.setOnMouseClicked(event -> {
-			System.out.println("Clicked on ad banner"); // Replace this with your desired action
-		});
-
-		imageBanner.getStyleClass().add("ad-banner");
 
 
 
 		VBox topSection = new VBox();
-		topSection.getChildren().addAll(header, navBox, imageBanner);
+		topSection.getChildren().addAll(header, navBox, imageBanner, makeHomepagePane);
 
 		mainLayout.setTop(topSection);
 		mainLayout.setCenter(root);
 
 
-///////////////////////////////////////////////////////////////////////////////TABS/////////////////////////////////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////////////////////TABS//////////////////////////////////////////////////////////////////////////////////////
 
 		// Create tabs
 		Tab entmtTab = new Tab("Entertainment");
@@ -317,7 +375,7 @@ public class Main extends Application {
 
 
 		// Create TabPane and add tabs to it
-		TabPane tabPane = new TabPane();
+		tabPane = new TabPane();
 		tabPane.getTabs().addAll(entmtTab, foodTab, sportsTab, autoTab, financeTab, fashionTab);
 		tabPane.setTabMinWidth(80); // Set the minimum width of each tab
 		tabPane.setTabMaxWidth(80); // Set the maximum width of each tab
@@ -338,7 +396,7 @@ public class Main extends Application {
 		financeTab.setContent(createTabContent("/Images/finance_1.png", "Bankrupt Bed Bath & Beyond Seeks Millions From Ocean Carriers", "/Images/finance_2.png", "Starbucks Beats Earnings and Sales. Why the Stock is Down"));
 		fashionTab.setContent(createTabContent("/Images/fashion_1.png", "What's Trending 2023", "/Images/fashion_2.png", "9 Fresh Ways to Wear Jean Shorts for Summer 2023"));
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -383,6 +441,13 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
+
+
+
+
+
+
+
 
 	public static void main(String[] args) {
 		launch(args);
@@ -480,11 +545,20 @@ public class Main extends Application {
 	}
 	//////////////////////////////////////////////////////////////ADD MORE MENU ITEM AND GET CSS COLORS TO MATCH WITH OVERALL SCENE/////////////////////////////////
 	private void createDropdownMenu(MenuButton moreButton) {
-	    MenuItem accountItem = new MenuItem("Accounts");
-	    MenuItem settingsItem = new MenuItem("Settings");
-	    MenuItem helpItem = new MenuItem("Help");
+		MenuItem adItem = new MenuItem("Advertising");
+		MenuItem helpItem = new MenuItem("Help");
+		MenuItem shopItem = new MenuItem("Shopping");
+		MenuItem techItem = new MenuItem("Tech");
 
-	    moreButton.getItems().addAll(accountItem, settingsItem, helpItem);
+
+
+		moreButton.getItems().addAll(adItem, helpItem, shopItem, techItem);
+	}
+	private void setComponentsVisibility(boolean visibility) {
+		newsGrid.setVisible(visibility);
+		tabPane.setVisible(visibility);
+		//signInButton.setVisible(visibility);
+		signInBox.setVisible(visibility);
 	}
 
 
