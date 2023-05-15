@@ -165,9 +165,9 @@ public class Main extends Application {
 
 
 		// Handle mouse click events on the BorderPane to remove focus from search bar
-		root.addEventFilter(MouseEvent.MOUSE_CLICKED, (event) -> {
-			searchBar.getParent().requestFocus(); // Remove focus from search bar
-		});
+//		root.addEventFilter(MouseEvent.MOUSE_CLICKED, (event) -> {
+//			searchBar.getParent().requestFocus(); // Remove focus from search bar
+//		});
 
 
 		header.getChildren().addAll(yahooLogo,  searchBox);
@@ -236,23 +236,6 @@ public class Main extends Application {
 		signInBox.getChildren().add(signInButton);
 		
 		
-		
-		
-		//root.setRight(signInBox);
-		
-		//AnchorPane signInArea = new AnchorPane();
-		//signInArea.setMinSize(200, 200);  
-		//signInArea.setMaxSize(200, 200); 
-		//signInArea.getChildren().add(signInBox);
-		//AnchorPane.setTopAnchor(signInBox, 5.0);
-		//AnchorPane.setRightAnchor(signInBox, 30.0);
-		//signInArea.setTranslateY(-400);
-		//signInArea.setTranslateX(100);
-		//root.setRight(signInArea);
-		
-		
-		
-
 
 		// Navigation bar section with buttons
 		HBox navBox = new HBox();
@@ -395,6 +378,10 @@ public class Main extends Application {
 	    PasswordField passwordField = new PasswordField();
 	    Button loginButton = new Button("Login");
 	    Button foldButton = new Button("Fold");
+	    
+	    //textfield sizes
+	    usernameField.setMaxWidth(200);
+	    passwordField.setMaxWidth(200);
 
 	    // Handle login button click
 	    loginButton.setOnAction(e -> {
