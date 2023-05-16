@@ -158,6 +158,7 @@ public class Main extends Application {
 			Text searchText = new Text(searchTitle);
 			searchText.setWrappingWidth(200);
 			searchText.setTextAlignment(TextAlignment.LEFT);
+			searchText.getStyleClass().add("trending-searches");
 			searchText.setOnMouseClicked(event -> {
 				String searchUrl = getTrendingSearchUrl(searchTitle);
 				System.out.println("Clicked on " + searchTitle);
@@ -458,6 +459,7 @@ public class Main extends Application {
 		weatherHBox.setSpacing(10);
 		wLabel1.setAlignment(Pos.CENTER);
 		weatherVBox.setAlignment(Pos.CENTER);
+		weatherVBox.getStyleClass().add("bordered-box");
 		weatherHBox.setAlignment(Pos.CENTER);
 
 
@@ -602,6 +604,7 @@ public class Main extends Application {
 
 		primaryStage.setTitle("Yahoo");
 		primaryStage.setScene(scene);
+		primaryStage.setMaximized(true);
 		primaryStage.show();
 	}
 

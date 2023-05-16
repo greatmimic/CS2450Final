@@ -2,14 +2,34 @@
     -fx-border-color: black;
     -fx-border-width: 1px;
     -fx-padding: 10px;
-    -fx-max-width: 200px; /* Set the maximum width */
-    -fx-max-height: 100px; /* Set the maximum height */
+    -fx-max-width: 300px; /* Set the maximum width /
+    -fx-max-height: 200px; / Set the maximum height */
 }
 
-
 .trending-label {
+       -fx-background-color:#CBC3E3;
+    -fx-text-fill: purple;
+    -fx-max-width:335;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-border-color: purple;
+}
+
+.trending-searches {
+    -fx-background-color: transparent;
+    -fx-text-fill: BLACK;
+    -fx-font-size: 14px;
+}
+
+.trending-searches:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: #720e9e !important;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-scale-x: 1.1;
+      -fx-scale-y: 1.1;
+
 }
 
 .search-box {

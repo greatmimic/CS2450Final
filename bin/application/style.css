@@ -1,4 +1,36 @@
+.bordered-box {
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-padding: 10px;
+    -fx-max-width: 300px; /* Set the maximum width /
+    -fx-max-height: 200px; / Set the maximum height */
+}
 
+.trending-label {
+       -fx-background-color:#CBC3E3;
+    -fx-text-fill: purple;
+    -fx-max-width:335;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-border-color: purple;
+}
+
+.trending-searches {
+    -fx-background-color: transparent;
+    -fx-text-fill: BLACK;
+    -fx-font-size: 14px;
+}
+
+.trending-searches:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: #720e9e !important;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-scale-x: 1.1;
+      -fx-scale-y: 1.1;
+
+}
 
 .search-box {
     -fx-background-color: white;
@@ -16,86 +48,6 @@
     -fx-padding: 5px;
 }
 
-.weather{
-	
-	-fx-background-color:#CBC3E3;
-	-fx-text-fill: purple;
-	-fx-max-width:335;
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-     -fx-border-color: purple;
-}
-
-.monday{
-	
-	-fx-background-color:#CBC3E3;
-	-fx-text-fill: purple;
-	-fx-max-width:150;
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-     -fx-border-color: purple;
-}
-.tuesday{
-	-fx-background-color:#CBC3E3;
-	-fx-text-fill: #c40000;
-	-fx-max-width:150;
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-     -fx-border-color: purple;
-}
-.wednesday{
-	-fx-background-color:#CBC3E3;
-	-fx-text-fill: #c40000;
-	-fx-max-width:150;
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-     -fx-border-color: purple;
-}
-
-.thursday{
-	-fx-background-color:#CBC3E3;
-	-fx-text-fill: #c40000;
-	-fx-max-width:150;
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-     -fx-border-color: purple;
-}
-
-.friday{
-	-fx-background-color:#CBC3E3;
-	-fx-text-fill: #c40000;
-	-fx-max-width:150;
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-     -fx-border-color: purple;
-}
-
-.saturday{
-	-fx-background-color:#CBC3E3;
-	-fx-text-fill: #c40000;
-	-fx-max-width:150;
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-     -fx-border-color: purple;
-}
-
-.sunday{
-	-fx-background-color:#CBC3E3;
-	-fx-text-fill: #c40000;
-	-fx-max-width:150;
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-     -fx-border-color: purple;
-}
-
 .nav-button {
     -fx-background-color: transparent;
     -fx-text-fill: BLACK;
@@ -109,12 +61,52 @@
     -fx-font-size: 18px;
     -fx-font-weight: bold;
     -fx-cursor: hand;
+    -fx-scale-x: 1.1;
+  	-fx-scale-y: 1.1;
+
+}
+.menu-button {
+	-fx-background-color: transparent;
+    -fx-text-fill: BLACK;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+.menu-button:hover {
+  -fx-background-color: transparent;
+  -fx-text-fill: #720e9e;
+  -fx-font-size: 18px;
+  -fx-font-weight: bold;
+  -fx-cursor: hand;
+  -fx-scale-x: 1.1;
+  -fx-scale-y: 1.1;
+ 
 }
 .news-company-label {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-
 }
+
+.weather{
+	
+	-fx-background-color:#CBC3E3;
+	-fx-text-fill: purple;
+	-fx-max-width:335;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    
+     -fx-border-color: purple;
+}
+
+.monday{
+	
+	-fx-background-color:#CBC3E3;
+	-fx-text-fill: purple;
+	-fx-max-width:150;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-border-color: purple;
+}
+
 .logo-button {
     -fx-background-color: WHITE; /* Change the background color as desired */
     -fx-border-color: #BDBDBD; /* Change the border color as desired */
@@ -125,6 +117,8 @@
 .logo-button:hover {
     -fx-background-color: #BDBDBD;
     -fx-border-color:  #720e9e;/* Change the hover background color as desired */
+    -fx-scale-x: 1.1;
+	-fx-scale-y: 1.1;
 }
 .ad-banner:hover {
     -fx-cursor: hand;
@@ -138,7 +132,35 @@
     -fx-padding: 10px;
     -fx-focus-color: transparent;
 }
+.make-homepage {
+	-fx-background-color: transparent;
+}
+.make-homepage:hover{
+	-fx-cursor: hand;
+	-fx-text-fill: #720e9e;
+	-fx-scale-x: 1.1;
+	-fx-scale-y: 1.1;
+	-fx-font-weight: bold;
+}
+.web-view .scroll-bar {
+    -fx-pref-width: 20px;
+}
 
+.web-view .scroll-bar:vertical .thumb {
+    -fx-background-color: #720e9e;
+    -fx-background-radius: 10px;
+}
+
+.web-view .scroll-bar .increment-button,
+.web-view .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-shape: " ";
+}
+
+.web-view .scroll-bar .increment-arrow,
+.web-view .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
 
 .root{
 	-fx-background-color: white;
