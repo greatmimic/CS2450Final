@@ -48,12 +48,19 @@
     -fx-border-width: 1px;
 }
 
-.search-box .search-button {
-    -fx-background-color: #720e9e;
+.search-button {
+    -fx-background-color: #0096FF;
     -fx-background-radius: 5px;
     -fx-background-insets: 0;
     -fx-text-fill: white;
     -fx-padding: 5px;
+
+}
+.search-button:hover {
+	-fx-cursor: hand;
+	-fx-scale-x: 1.1;
+	-fx-scale-y: 1.1;
+	-fx-background-color: #0047AB;
 }
 
 .nav-button {
@@ -149,6 +156,8 @@
 }
 .make-homepage {
 	-fx-background-color: transparent;
+	-fx-font-weight: bold;
+	-fx-font-size: 15px
 }
 .make-homepage:hover{
 	-fx-cursor: hand;
@@ -156,6 +165,10 @@
 	-fx-scale-x: 1.1;
 	-fx-scale-y: 1.1;
 	-fx-font-weight: bold;
+}
+.content-box:hover{
+	-fx-scale-x: 1.1;
+	-fx-scale-y: 1.1;
 }
 .web-view .scroll-bar {
     -fx-pref-width: 20px;

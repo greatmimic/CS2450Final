@@ -184,7 +184,7 @@ public class Main extends Application {
 		
 		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////SEARCH BAR AND LOGO////////////////////////////////////////////////////////////////////////////////
-		ImageView yahooLogo = new ImageView(loadImage("/Images/yahoo_logo.png"));
+		ImageView yahooLogo = new ImageView(loadImage("yahoo_logo.png"));
 		yahooLogo.setFitWidth(110);
 		yahooLogo.setFitHeight(50);
 
@@ -201,7 +201,7 @@ public class Main extends Application {
 
 
 		//search button
-		ImageView searchIcon = new ImageView(loadImage("/Images/search_icon.png"));
+		ImageView searchIcon = new ImageView(loadImage("search_icon.png"));
 		searchIcon.setFitWidth(20);
 		searchIcon.setFitHeight(20);
 		Button searchButton = new Button("", searchIcon);
@@ -229,7 +229,7 @@ public class Main extends Application {
 		webViewLayout = new StackPane();
 		webViewLayout.getChildren().add(webView);
 
-		ImageView closeIcon = new ImageView(loadImage("/Images/close_icon.png"));
+		ImageView closeIcon = new ImageView(loadImage("close_icon.png"));
 		closeButton = new Button("", closeIcon);
 		webViewLayout.getChildren().add(closeButton);
 		closeButton.setVisible(false);
@@ -257,12 +257,12 @@ public class Main extends Application {
 
 		// News companies
 		String[][] newsCompanies = {
-				{"CNN", "/Images/cnn_icon.png", "https://www.cnn.com"},
-				{"BBC", "/Images/bbc_icon.png", "https://www.bbc.com"},
-				{"FOX", "/Images/fox_icon.png", "https://www.foxnews.com"}, 
-				{"Aol.","/Images/aol_icon.png", "https://www.aol.com"}, 
-				{"NBC", "/Images/nbc_icon.png", "https://www.nbcnews.com"},
-				{"CBS", "/Images/cbs_icon.png", "https://cbsnews.com"},
+				{"CNN", "cnn_icon.png", "https://www.cnn.com"},
+				{"BBC", "bbc_icon.png", "https://www.bbc.com"},
+				{"FOX", "fox_icon.png", "https://www.foxnews.com"}, 
+				{"Aol.","aol_icon.png", "https://www.aol.com"}, 
+				{"NBC", "nbc_icon.png", "https://www.nbcnews.com"},
+				{"CBS", "cbs_icon.png", "https://cbsnews.com"},
 
 		};
 
@@ -406,10 +406,10 @@ public class Main extends Application {
 		
 		
 
-		ImageView sunny = new ImageView(loadImage("/Images/sunny_icon.png"));
-		ImageView rainy = new ImageView(loadImage("/Images/rainy_icon.png"));
-		ImageView thunder = new ImageView(loadImage("/Images/thunder_icon.png"));
-		ImageView snowy = new ImageView(loadImage("/Images/snowy_icon.png"));
+		ImageView sunny = new ImageView(loadImage("sunny_icon.png"));
+		ImageView rainy = new ImageView(loadImage("rainy_icon.png"));
+		ImageView thunder = new ImageView(loadImage("thunder_icon.png"));
+		ImageView snowy = new ImageView(loadImage("snowy_icon.png"));
 
 		VBox mondayVbox = new VBox(10, wLabel2, sunny, wWeather1);
 		mondayVbox.getStyleClass().add("monday");
@@ -455,7 +455,7 @@ public class Main extends Application {
 		navBox.setPadding(new Insets(10, 0, 10, 0));
 		navBox.setAlignment(Pos.CENTER);
 		navBox.setSpacing(20);
-		ImageView homeIcon = new ImageView(loadImage("/Images/home_icon.png"));
+		ImageView homeIcon = new ImageView(loadImage("home_icon.png"));
 		homeIcon.setFitWidth(20);
 		homeIcon.setFitHeight(20);
 
@@ -491,7 +491,7 @@ public class Main extends Application {
 		imageBanner.setAlignment(Pos.CENTER);
 		imageBanner.setSpacing(20);
 
-		ImageView bannerImage = new ImageView(loadImage("/Images/ad_banner.png"));
+		ImageView bannerImage = new ImageView(loadImage("ad_banner.png"));
 		bannerImage.setFitHeight(100);
 		bannerImage.setPreserveRatio(true);
 		bannerImage.getStyleClass().add("ad-banner");
@@ -533,12 +533,12 @@ public class Main extends Application {
 		tabPaneBox.setAlignment(Pos.CENTER);
 
 		// Tab content
-		entmtTab.setContent(createTabContent("/Images/entmt_1.png", "Writer Strike 2023 Explained", "/Images/entmt_2.png", "Illegal Twitter Upload of 'Super Mario Bros.'", "https://www.yahoo.com/entertainment/"));
-		foodTab.setContent(createTabContent("/Images/food_1.png", "General Mills Recall on Flour Due To Salmonella", "/Images/food_2.png", "How a Burger Ends Up On Your Plate", "https://www.yahoo.com/lifestyle/tagged/health"));
-		sportsTab.setContent(createTabContent("/Images/sports_1.png", "3 Keys To The Series", "/Images/sports_2.png", "PSG Suspends Messi", "https://sports.yahoo.com/"));
-		autoTab.setContent(createTabContent("/Images/auto_1.png", "List of Cars Under $20K", "/Images/auto_2.png", "Mustang Plows Into U-HAUL Trailer", "https://autos.yahoo.com/"));
-		financeTab.setContent(createTabContent("/Images/finance_1.png", "Bankrupt Bed Bath & Beyond Seeks Millions From Ocean Carriers", "/Images/finance_2.png", "Starbucks Beats Earnings and Sales. Why the Stock is Down", "https://finance.yahoo.com/"));
-		fashionTab.setContent(createTabContent("/Images/fashion_1.png", "What's Trending 2023", "/Images/fashion_2.png", "9 Fresh Ways to Wear Jean Shorts for Summer 2023", "https://shopping.yahoo.com/"));
+		entmtTab.setContent(createTabContent("entmt_1.png", "Writer Strike 2023 Explained", "entmt_2.png", "Illegal Twitter Upload of 'Super Mario Bros.'", "https://www.yahoo.com/entertainment/"));
+		foodTab.setContent(createTabContent("food_1.png", "General Mills Recall on Flour Due To Salmonella", "food_2.png", "How a Burger Ends Up On Your Plate", "https://www.yahoo.com/lifestyle/tagged/health"));
+		sportsTab.setContent(createTabContent("sports_1.png", "3 Keys To The Series", "sports_2.png", "PSG Suspends Messi", "https://sports.yahoo.com/"));
+		autoTab.setContent(createTabContent("auto_1.png", "List of Cars Under $20K", "auto_2.png", "Mustang Plows Into U-HAUL Trailer", "https://autos.yahoo.com/"));
+		financeTab.setContent(createTabContent("finance_1.png", "Bankrupt Bed Bath & Beyond Seeks Millions From Ocean Carriers", "finance_2.png", "Starbucks Beats Earnings and Sales. Why the Stock is Down", "https://finance.yahoo.com/"));
+		fashionTab.setContent(createTabContent("fashion_1.png", "What's Trending 2023", "fashion_2.png", "9 Fresh Ways to Wear Jean Shorts for Summer 2023", "https://shopping.yahoo.com/"));
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -585,6 +585,7 @@ public class Main extends Application {
 
 		primaryStage.setTitle("Yahoo");
 		primaryStage.setScene(scene);
+		primaryStage.setMaximized(true);
 		primaryStage.show();
 	}
 
