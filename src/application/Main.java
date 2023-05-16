@@ -187,6 +187,7 @@ public class Main extends Application {
 		closeButton.setVisible(false);
 		closeButton.setTranslateX(1015);
 		closeButton.setTranslateY(-360);
+		closeButton.getStyleClass().add("nav-button");
 		
 		
 		
@@ -207,6 +208,8 @@ public class Main extends Application {
 				{"CBS", "/Images/cbs_icon.png", "https://cbsnews.com"},
 
 		};
+		
+//		Fox news can't be opened using webview through javaFX
 
 		//table of news grid pane
 		newsGrid = new GridPane();
@@ -261,8 +264,6 @@ public class Main extends Application {
 			webViewLayout.setManaged(false);
 			// Show other controls
 			setComponentsVisibility(true);
-			
-			System.out.println("button working");
 		});
 		
 		
