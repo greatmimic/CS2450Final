@@ -530,7 +530,7 @@ public class Main extends Application {
 		centerBox.setTranslateX(100);
 		
 		VBox rightContentBox = new VBox(weatherVBox, trendingBox, signInBox);
-		rightContentBox.setSpacing(20);
+		rightContentBox.setSpacing(100);
 		rightContentBox.setAlignment(Pos.CENTER);
 		
 		StackPane mainCenter = new StackPane(centerBox, rightContentBox);
