@@ -195,10 +195,9 @@ public class Main extends Application {
 		searchBar.setPromptText("Search for news, stocks, and more");
 		searchBar.setFocusTraversable(false); // remove default focus
 		searchBar.setDisable(false);
-		searchBar.setOnMouseClicked(event -> {
-			searchBar.requestFocus();
+		searchBar.focusedProperty().addListener((obs, oldVal, newVal) -> {
+		    System.out.println("TextField Focus: " + newVal);
 		});
-
 
 
 		//search button
@@ -351,13 +350,10 @@ public class Main extends Application {
 		// Create the "Make Homepage" label
 		Button makeHomepage = new Button("Make Homepage");
 		makeHomepage.getStyleClass().add("make-homepage");
-
-		// Create a layout container to hold the label
-		StackPane makeHomepagePane = new StackPane(makeHomepage);
-		makeHomepagePane.setAlignment(Pos.TOP_RIGHT);
-		makeHomepagePane.setPadding(new Insets(10));
-		makeHomepagePane.setTranslateY(-220);
-		makeHomepagePane.setTranslateX(-400);
+		
+		header.getChildren().add(makeHomepage);
+		makeHomepage.setTranslateX(100);
+		
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 
 		
@@ -505,7 +501,7 @@ public class Main extends Application {
 
 
 		VBox topSection = new VBox();
-		topSection.getChildren().addAll(header, navBox, imageBanner, makeHomepagePane);
+		topSection.getChildren().addAll(header, navBox, imageBanner);
 
 		mainLayout.setTop(topSection);
 		mainLayout.setCenter(root);
@@ -553,6 +549,7 @@ public class Main extends Application {
 		centerBox.setAlignment(Pos.CENTER);
 		centerBox.setTranslateY(0);
 		centerBox.setTranslateX(100);
+	
 
 		VBox rightContentBox = new VBox(signInBox, trendingBox, weatherVBox);
 		rightContentBox.setSpacing(70);
@@ -578,8 +575,8 @@ public class Main extends Application {
 		// Add signInArea to the second column of the GridPane
 		GridPane.setConstraints(rightContentBox, 1, 0);
 
-		root.getChildren().addAll(mainCenter, rightContentBox);
-
+		root.getChildren().addAll(mainCenter);
+		root.add(rightContentBox, 1, 0);
 
 
 
@@ -588,7 +585,6 @@ public class Main extends Application {
 
 		primaryStage.setTitle("Yahoo");
 		primaryStage.setScene(scene);
-		primaryStage.setMaximized(true);
 		primaryStage.show();
 	}
 
@@ -735,6 +731,8 @@ public class Main extends Application {
 	    content1.setSpacing(10);
 	    content1.setAlignment(Pos.CENTER);
 	    content1.setPadding(new Insets(20, 0, 0, 0));
+	    content1.getStyleClass().add("content-box");
+	   
 
 	    ImageView imageView2 = new ImageView(loadImage(imagePath2));
 	    imageView2.setFitWidth(200);
@@ -748,7 +746,7 @@ public class Main extends Application {
 	    content2.setSpacing(10);
 	    content2.setAlignment(Pos.CENTER);
 	    content2.setPadding(new Insets(20, 0, 0, 0));
-	    
+	    content2.getStyleClass().add("content-box");
 	    
 	    Button seeMoreButton = new Button("See More");
 	    
@@ -768,7 +766,7 @@ public class Main extends Application {
 	    HBox tabContent = new HBox(content1, content2, seeMoreButton);
 	    tabContent.setSpacing(20);
 	    tabContent.setAlignment(Pos.CENTER);
-
+	    tabContent.setPrefHeight(300); // Increase the preferred height
 	    return tabContent;
 	}
 
