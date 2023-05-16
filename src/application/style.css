@@ -6,6 +6,7 @@
     -fx-max-height: 100px; /* Set the maximum height */
 }
 
+
 .trending-label {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
@@ -44,7 +45,12 @@
   	-fx-scale-y: 1.1;
 
 }
-
+.menu-button {
+	-fx-background-color: transparent;
+    -fx-text-fill: BLACK;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
 .menu-button:hover {
   -fx-background-color: transparent;
   -fx-text-fill: #720e9e;
@@ -53,7 +59,7 @@
   -fx-cursor: hand;
   -fx-scale-x: 1.1;
   -fx-scale-y: 1.1;
-  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 0, 0, 0, 2);
+ 
 }
 .news-company-label {
     -fx-font-size: 14px;
@@ -78,66 +84,7 @@
 	-fx-max-width:150;
     -fx-font-size: 15px;
     -fx-font-weight: bold;
-    -fx-cursor: hand;
-     -fx-border-color: purple;
-}
-.tuesday{
-	-fx-background-color:#CBC3E3;
-	-fx-text-fill: #c40000;
-	-fx-max-width:150;
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-     -fx-border-color: purple;
-}
-.wednesday{
-	-fx-background-color:#CBC3E3;
-	-fx-text-fill: #c40000;
-	-fx-max-width:150;
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-     -fx-border-color: purple;
-}
-
-.thursday{
-	-fx-background-color:#CBC3E3;
-	-fx-text-fill: #c40000;
-	-fx-max-width:150;
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-     -fx-border-color: purple;
-}
-
-.friday{
-	-fx-background-color:#CBC3E3;
-	-fx-text-fill: #c40000;
-	-fx-max-width:150;
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-     -fx-border-color: purple;
-}
-
-.saturday{
-	-fx-background-color:#CBC3E3;
-	-fx-text-fill: #c40000;
-	-fx-max-width:150;
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-     -fx-border-color: purple;
-}
-
-.sunday{
-	-fx-background-color:#CBC3E3;
-	-fx-text-fill: #c40000;
-	-fx-max-width:150;
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-     -fx-border-color: purple;
+    -fx-border-color: purple;
 }
 
 .logo-button {
@@ -150,6 +97,8 @@
 .logo-button:hover {
     -fx-background-color: #BDBDBD;
     -fx-border-color:  #720e9e;/* Change the hover background color as desired */
+    -fx-scale-x: 1.1;
+	-fx-scale-y: 1.1;
 }
 .ad-banner:hover {
     -fx-cursor: hand;
@@ -169,6 +118,9 @@
 .make-homepage:hover{
 	-fx-cursor: hand;
 	-fx-text-fill: #720e9e;
+	-fx-scale-x: 1.1;
+	-fx-scale-y: 1.1;
+	-fx-font-weight: bold;
 }
 .web-view .scroll-bar {
     -fx-pref-width: 20px;

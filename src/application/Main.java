@@ -6,6 +6,7 @@ import java.io.InputStream;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -165,6 +166,7 @@ public class Main extends Application {
 
 			searchText.setOnMouseEntered(e -> {
 				searchText.setFill(Color.PURPLE);
+				searchText.setCursor(Cursor.HAND);
 			});
 
 			searchText.setOnMouseExited(e -> {
@@ -377,62 +379,81 @@ public class Main extends Application {
 		makeHomepagePane.setTranslateX(-50);
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 
-		//weather
+		
+		// Weather
 		HBox weatherHBox = new HBox();
 		weatherVBox = new VBox();
 
-		Image image = new Image(getClass().getResource("/Images/weather.png").toExternalForm());
-		ImageView imageView = new ImageView(image);
-		ImageView imageView2 = new ImageView(image);
-		ImageView imageView3 = new ImageView(image);
-		ImageView imageView4 = new ImageView(image);
-		ImageView imageView5 = new ImageView(image);
-		ImageView imageView6 = new ImageView(image);
-		ImageView imageView7 = new ImageView(image);
-
 		Label wLabel1 = new Label("Weather");
 		wLabel1.getStyleClass().add("weather");
-
+		wLabel1.setMinWidth(430);
+		
+		
+		
 		Label wLabel2 = new Label(" Monday");
-
 		Label wWeather1 = new Label(" 81F  55F ");
+	
+		
 		Label wLabel3 = new Label(" Tuesday");
-		Label wWeather2 = new Label(" 81F  56F ");
+		Label wWeather2 = new Label(" 73F  56F ");
+	
 		Label wLabel4 = new Label(" Wednesday ");
-		Label wWeather3 = new Label(" 84F   58F ");
-		Label wLabel5 = new Label(" Thursday ");
-		Label wWeather4 = new Label(" 85F  56F ");
-		Label wLabel6 = new Label("Friday");
-		Label wWeather5 = new Label("80F");
-		Label wLabel7 = new Label("Saturday");
-		Label wWeather6 = new Label("72F");
-		Label wLabel8 = new Label("Sunday");
-		Label wWeather7 = new Label("87F");
-		Button wMoreButton = new Button("See More");
+		Label wWeather3 = new Label(" 67F   52F ");
 
-		VBox mondayVbox = new VBox(10,wLabel2,imageView,wWeather1);
+		Label wLabel5 = new Label(" Thursday ");
+		Label wWeather4 = new Label(" 54F  30F ");
+
+		
+		Button wMoreButton = new Button("See More");
+		wMoreButton.getStyleClass().add("nav-button");
+		
+		wMoreButton.setOnAction(event -> {
+		    String newUrl = "https://www.yahoo.com/news/weather/forecast/12796088"; 
+		    webEngine.load(newUrl); 
+		    webView.setVisible(true);
+		    webView.toFront();
+		    setComponentsVisibility(false);
+		    closeButton.setVisible(true);
+		    webViewLayout.setVisible(true);
+		    webViewLayout.setManaged(true);
+		});
+		
+		
+		
+		
+		
+
+		ImageView sunny = new ImageView(loadImage("/Images/sunny_icon.png"));
+		ImageView rainy = new ImageView(loadImage("/Images/rainy_icon.png"));
+		ImageView thunder = new ImageView(loadImage("/Images/thunder_icon.png"));
+		ImageView snowy = new ImageView(loadImage("/Images/snowy_icon.png"));
+
+		VBox mondayVbox = new VBox(10, wLabel2, sunny, wWeather1);
 		mondayVbox.getStyleClass().add("monday");
 		mondayVbox.setAlignment(Pos.CENTER);
-		VBox tuesdayVbox = new VBox(10,wLabel3,imageView2,wWeather2);
-		tuesdayVbox.getStyleClass().add("tuesday");
+		mondayVbox.setMinWidth(100);
+		mondayVbox.setMaxWidth(100);
+		
+		VBox tuesdayVbox = new VBox(10, wLabel3, rainy, wWeather2);
+		tuesdayVbox.getStyleClass().add("monday");
 		tuesdayVbox.setAlignment(Pos.CENTER);
-		VBox wednesdayVbox = new VBox(10,wLabel4,imageView3,wWeather3);
-		wednesdayVbox.getStyleClass().add("wednesday");
+		tuesdayVbox.setMinWidth(100);
+		tuesdayVbox.setMaxWidth(100);
+		
+		VBox wednesdayVbox = new VBox(10, wLabel4, thunder, wWeather3);
+		wednesdayVbox.getStyleClass().add("monday");
 		wednesdayVbox.setAlignment(Pos.CENTER);
-		VBox thursdayVbox = new VBox(10,wLabel5,imageView4,wWeather4);
-		thursdayVbox.getStyleClass().add("thursday");
+		wednesdayVbox.setMinWidth(100);
+		wednesdayVbox.setMaxWidth(100);
+		
+		VBox thursdayVbox = new VBox(10, wLabel5, snowy, wWeather4);
+		thursdayVbox.getStyleClass().add("monday");
 		thursdayVbox.setAlignment(Pos.CENTER);
-		VBox fridayVbox = new VBox(10,wLabel6,imageView5,wWeather5);
-		fridayVbox.getStyleClass().add("friday");
-		VBox saturdayVbox = new VBox(10,wLabel7,imageView6,wWeather6);
-		saturdayVbox.getStyleClass().add("saturday");
-		VBox sundayVbox = new VBox(10,wLabel8,imageView7,wWeather7);
-		sundayVbox.getStyleClass().add("sunday");
+		thursdayVbox.setMinWidth(100);
+		thursdayVbox.setMaxWidth(100);
 
-
-
-		weatherHBox.getChildren().addAll(mondayVbox,tuesdayVbox,wednesdayVbox,thursdayVbox);
-		weatherVBox.getChildren().addAll(wLabel1,weatherHBox,wMoreButton);
+		weatherHBox.getChildren().addAll(mondayVbox, tuesdayVbox, wednesdayVbox, thursdayVbox);
+		weatherVBox.getChildren().addAll(wLabel1, weatherHBox, wMoreButton);
 		weatherVBox.setSpacing(10);
 		weatherHBox.setSpacing(10);
 		wLabel1.setAlignment(Pos.CENTER);
@@ -467,7 +488,7 @@ public class Main extends Application {
 		Button entertainmentButton = new Button("Entertainment");
 		entertainmentButton.getStyleClass().add("nav-button");
 		MenuButton moreButton = new MenuButton("More...");
-		moreButton.getStyleClass().addAll("nav-button", "menu-button");
+		moreButton.getStyleClass().add("menu-button");
 		createDropdownMenu(moreButton);
 
 
