@@ -133,10 +133,12 @@ public class Main extends Application {
 		trendingBox.setSpacing(10);
 		trendingBox.setPadding(new Insets(10));
 		trendingBox.setAlignment(Pos.TOP_CENTER);
-		trendingBox.getStyleClass().add("bordered-box");
+		trendingBox.setMinWidth(400);
+		trendingBox.getStyleClass().add("trending-bordered-box");
 
 		// Add "Trending Now" label
 		Label trendingLabel = new Label("Trending Now");
+		trendingLabel.setMinWidth(380);
 		trendingLabel.getStyleClass().add("trending-label");
 		trendingLabel.setAlignment(Pos.CENTER);
 		trendingBox.getChildren().add(trendingLabel);
@@ -387,21 +389,21 @@ public class Main extends Application {
 
 		Label wLabel1 = new Label("Weather");
 		wLabel1.getStyleClass().add("weather");
-		wLabel1.setMinWidth(430);
+		wLabel1.setMinWidth(380);
 		
 		
 		
-		Label wLabel2 = new Label(" Monday");
+		Label wLabel2 = new Label(" Mon.");
 		Label wWeather1 = new Label(" 81F  55F ");
 	
 		
-		Label wLabel3 = new Label(" Tuesday");
+		Label wLabel3 = new Label(" Tue.");
 		Label wWeather2 = new Label(" 73F  56F ");
 	
-		Label wLabel4 = new Label(" Wednesday ");
+		Label wLabel4 = new Label(" Wed. ");
 		Label wWeather3 = new Label(" 67F   52F ");
 
-		Label wLabel5 = new Label(" Thursday ");
+		Label wLabel5 = new Label(" Thur. ");
 		Label wWeather4 = new Label(" 54F  30F ");
 
 		
@@ -432,26 +434,26 @@ public class Main extends Application {
 		VBox mondayVbox = new VBox(10, wLabel2, sunny, wWeather1);
 		mondayVbox.getStyleClass().add("monday");
 		mondayVbox.setAlignment(Pos.CENTER);
-		mondayVbox.setMinWidth(100);
-		mondayVbox.setMaxWidth(100);
+		mondayVbox.setMinWidth(87);
+		mondayVbox.setMaxWidth(87);
 		
 		VBox tuesdayVbox = new VBox(10, wLabel3, rainy, wWeather2);
 		tuesdayVbox.getStyleClass().add("monday");
 		tuesdayVbox.setAlignment(Pos.CENTER);
-		tuesdayVbox.setMinWidth(100);
-		tuesdayVbox.setMaxWidth(100);
+		tuesdayVbox.setMinWidth(87);
+		tuesdayVbox.setMaxWidth(87);
 		
 		VBox wednesdayVbox = new VBox(10, wLabel4, thunder, wWeather3);
 		wednesdayVbox.getStyleClass().add("monday");
 		wednesdayVbox.setAlignment(Pos.CENTER);
-		wednesdayVbox.setMinWidth(100);
-		wednesdayVbox.setMaxWidth(100);
+		wednesdayVbox.setMinWidth(87);
+		wednesdayVbox.setMaxWidth(87);
 		
 		VBox thursdayVbox = new VBox(10, wLabel5, snowy, wWeather4);
 		thursdayVbox.getStyleClass().add("monday");
 		thursdayVbox.setAlignment(Pos.CENTER);
-		thursdayVbox.setMinWidth(100);
-		thursdayVbox.setMaxWidth(100);
+		thursdayVbox.setMinWidth(87);
+		thursdayVbox.setMaxWidth(87);
 
 		weatherHBox.getChildren().addAll(mondayVbox, tuesdayVbox, wednesdayVbox, thursdayVbox);
 		weatherVBox.getChildren().addAll(wLabel1, weatherHBox, wMoreButton);
@@ -459,7 +461,8 @@ public class Main extends Application {
 		weatherHBox.setSpacing(10);
 		wLabel1.setAlignment(Pos.CENTER);
 		weatherVBox.setAlignment(Pos.CENTER);
-		weatherVBox.getStyleClass().add("bordered-box");
+		weatherVBox.setMinWidth(400);
+		weatherVBox.getStyleClass().add("weather-bordered-box");
 		weatherHBox.setAlignment(Pos.CENTER);
 
 
@@ -567,8 +570,8 @@ public class Main extends Application {
 		centerBox.setTranslateY(0);
 		centerBox.setTranslateX(100);
 
-		VBox rightContentBox = new VBox(weatherVBox, trendingBox, signInBox);
-		rightContentBox.setSpacing(100);
+		VBox rightContentBox = new VBox(trendingBox, weatherVBox, signInBox);
+		rightContentBox.setSpacing(70);
 		rightContentBox.setAlignment(Pos.CENTER);
 
 		StackPane mainCenter = new StackPane(centerBox, rightContentBox);
