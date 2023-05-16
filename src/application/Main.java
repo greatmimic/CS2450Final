@@ -38,16 +38,6 @@ import javafx.scene.web.*;
 
 
 
-//@@@@TODO@@@@
-//Create self scrolling news highlight bar with main, entertainment, sports, finance buttons
-//create tabs for entertainment, sports, auto, finance, food, fashion		DONE
-//create fake ad banner in between search bar and news grid       DONE
-//create a chart simulation of billboard top 100 somewhere		
-//create a single area weather forecast (one city)
-//get proper icons for nav buttons
-//create login interface
-//edit onAction button for news grid to open actual news website links		DONE
-
 public class Main extends Application {
 
 	//load image
@@ -87,6 +77,8 @@ public class Main extends Application {
 	private GridPane newsGrid;
 	private TabPane tabPane;
 	private VBox signInBox;
+	private VBox weatherVBox;
+	private VBox trendingBox;
 
 
 	// Populate tab content
@@ -123,76 +115,83 @@ public class Main extends Application {
 
 		return tabContent;
 	}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	
 	
 	//trending article section
-		private String getTrendingSearchUrl(String searchTitle) {
-	        // need to replace with logic to get trending searches
-	        return "https://www.yahoo.com/news/article/" + searchTitle.replace(" ", "_");
+	private String getTrendingSearchUrl(String searchTitle) {
+		// need to replace with logic to get trending searches
+		return "https://www.yahoo.com/news/article/" + searchTitle.replace(" ", "_");
+	}
+
+	private VBox createTrendingBox() {
+		trendingBox = new VBox();
+		trendingBox.setSpacing(10);
+		trendingBox.setPadding(new Insets(10));
+		trendingBox.setAlignment(Pos.TOP_CENTER);
+		trendingBox.getStyleClass().add("bordered-box");
+
+		// Add "Trending Now" label
+		Label trendingLabel = new Label("Trending Now");
+		trendingLabel.getStyleClass().add("trending-label");
+		trendingLabel.setAlignment(Pos.CENTER);
+		trendingBox.getChildren().add(trendingLabel);
+
+		// Add black outline to the VBox
+		trendingBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,
+				null, new BorderWidths(1))));
+
+		// Populate with trending Searches
+		String[] trendingSearches = {
+				"1. The Voice",
+				"2. New Mexico Shooting",
+				"3. Ja Morant",
+				"4. Shark Attacks Kayak",
+				"5. Jamie Foxx"
+		};
+
+		for (String searchTitle : trendingSearches) {
+			Text searchText = new Text(searchTitle);
+			searchText.setWrappingWidth(200);
+			searchText.setTextAlignment(TextAlignment.LEFT);
+			searchText.setOnMouseClicked(event -> {
+				String searchUrl = getTrendingSearchUrl(searchTitle);
+				System.out.println("Clicked on " + searchTitle);
+				getHostServices().showDocument(searchUrl);
+			});
+
+			searchText.setOnMouseEntered(e -> {
+				searchText.setFill(Color.PURPLE);
+			});
+
+			searchText.setOnMouseExited(e -> {
+				searchText.setFill(Color.BLACK);
+			});
+
+			trendingBox.getChildren().add(searchText);
 		}
-		
-		private VBox createTrendingBox() {
-		    VBox trendingBox = new VBox();
-		    trendingBox.setSpacing(10);
-		    trendingBox.setPadding(new Insets(10));
-		    trendingBox.setAlignment(Pos.TOP_CENTER);
-			trendingBox.getStyleClass().add("bordered-box");
 
-		    // Add "Trending Now" label
-		    Label trendingLabel = new Label("Trending Now");
-		    trendingLabel.getStyleClass().add("trending-label");
-		    trendingLabel.setAlignment(Pos.CENTER);
-		    trendingBox.getChildren().add(trendingLabel);
-
-		    // Add black outline to the VBox
-		    trendingBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,
-		            null, new BorderWidths(1))));
-
-		    // Populate with trending Searches
-		    String[] trendingSearches = {
-		        "1. The Voice",
-		        "2. New Mexico Shooting",
-		        "3. Ja Morant",
-		        "4. Shark Attacks Kayak",
-		        "5. Jamie Foxx"
-		    };
-
-		    for (String searchTitle : trendingSearches) {
-		        Text searchText = new Text(searchTitle);
-		        searchText.setWrappingWidth(200);
-		        searchText.setTextAlignment(TextAlignment.LEFT);
-		        searchText.setOnMouseClicked(event -> {
-		            String searchUrl = getTrendingSearchUrl(searchTitle);
-		            System.out.println("Clicked on " + searchTitle);
-		            getHostServices().showDocument(searchUrl);
-		        });
-		        
-		        searchText.setOnMouseEntered(e -> {
-		            searchText.setFill(Color.PURPLE);
-		        });
-		        
-		        searchText.setOnMouseExited(e -> {
-		            searchText.setFill(Color.BLACK);
-		        });
-
-		        trendingBox.getChildren().add(searchText);
-		    }
-
-		    return trendingBox;
-		}
+		return trendingBox;
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
 		VBox trendingBox = createTrendingBox();
-		
+
 		BorderPane mainLayout = new BorderPane();
 		GridPane root = new GridPane();
-		
+
 		// Header section with Yahoo logo and search bar
 		HBox header = new HBox();
 		header.setPadding(new Insets(20, 0, 0, 0));
 		header.setAlignment(Pos.CENTER);
 		header.setSpacing(0);
-
+		
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////SEARCH BAR AND LOGO////////////////////////////////////////////////////////////////////////////////
 		ImageView yahooLogo = new ImageView(loadImage("/Images/yahoo_logo.png"));
 		yahooLogo.setFitWidth(110);
 		yahooLogo.setFitHeight(50);
@@ -236,22 +235,39 @@ public class Main extends Application {
 		header.getChildren().addAll(yahooLogo,  searchBox);
 
 
-		///////////////////////////////////////////////////////////////////////////////NEWS GRID////////////////////////////////////
+		///////////////////////////////////////////////////////////////////////////////NEWS GRID//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		WebView webView = new WebView();
 		WebEngine webEngine = webView.getEngine();
 		StackPane webViewLayout = new StackPane();
 		webViewLayout.getChildren().add(webView);
-		
+
 		ImageView closeIcon = new ImageView(loadImage("/Images/close_icon.png"));
 		Button closeButton = new Button("", closeIcon);
 		webViewLayout.getChildren().add(closeButton);
 		closeButton.setVisible(false);
 		closeButton.setTranslateX(1015);
 		closeButton.setTranslateY(-360);
-		
-		
-		
+		closeButton.getStyleClass().add("nav-button");
+
+		webView.setOnScroll(event -> {
+		    double deltaY = event.getDeltaY();
+		    Object scrollYObj = webView.getEngine().executeScript("window.pageYOffset");
+		    if (scrollYObj instanceof Number) {
+		        double scrollY = ((Number) scrollYObj).doubleValue();
+		        scrollY -= deltaY * 10; // Adjust scroll speed by changing the multiplier (40 in this example)
+		        webView.getEngine().executeScript("window.scrollTo(0, " + scrollY + ")");
+		    }
+		    event.consume();
+		});
+
+
+
+
+
+
+
+
 		// Initially webView is not visible
 		root.getChildren().add(webViewLayout);
 		webView.setVisible(false);
@@ -303,7 +319,7 @@ public class Main extends Application {
 				setComponentsVisibility(false);
 				closeButton.setVisible(true);
 				webViewLayout.setVisible(true);
-			    webViewLayout.setManaged(true);
+				webViewLayout.setManaged(true);
 
 			});
 
@@ -313,9 +329,9 @@ public class Main extends Application {
 
 		///////////////////////////////////////////////////CLOSE BUTTON FOR WEBVIEW//////////////////////////////////////////////////////////
 
-		
-		
-		
+
+
+
 		// Set visibility back to true when close button is clicked
 		closeButton.setOnMouseClicked(e->{
 			// Hide webView 
@@ -323,11 +339,10 @@ public class Main extends Application {
 			webViewLayout.setManaged(false);
 			// Show other controls
 			setComponentsVisibility(true);
-			
-			System.out.println("button working");
+
 		});
-		
-		
+
+
 
 
 
@@ -360,13 +375,13 @@ public class Main extends Application {
 		makeHomepagePane.setPadding(new Insets(10));
 		makeHomepagePane.setTranslateY(-200);
 		makeHomepagePane.setTranslateX(-50);
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 
-		
 		//weather
 		HBox weatherHBox = new HBox();
-		VBox weatherVBox = new VBox();
-		
-		Image image = new Image("file:/C:/Users/Huy/Pictures/Weather.PNG");
+		weatherVBox = new VBox();
+
+		Image image = new Image(getClass().getResource("/Images/weather.png").toExternalForm());
 		ImageView imageView = new ImageView(image);
 		ImageView imageView2 = new ImageView(image);
 		ImageView imageView3 = new ImageView(image);
@@ -374,12 +389,12 @@ public class Main extends Application {
 		ImageView imageView5 = new ImageView(image);
 		ImageView imageView6 = new ImageView(image);
 		ImageView imageView7 = new ImageView(image);
-		
+
 		Label wLabel1 = new Label("Weather");
 		wLabel1.getStyleClass().add("weather");
-		
+
 		Label wLabel2 = new Label(" Monday");
-		
+
 		Label wWeather1 = new Label(" 81F  55F ");
 		Label wLabel3 = new Label(" Tuesday");
 		Label wWeather2 = new Label(" 81F  56F ");
@@ -394,7 +409,7 @@ public class Main extends Application {
 		Label wLabel8 = new Label("Sunday");
 		Label wWeather7 = new Label("87F");
 		Button wMoreButton = new Button("See More");
-		
+
 		VBox mondayVbox = new VBox(10,wLabel2,imageView,wWeather1);
 		mondayVbox.getStyleClass().add("monday");
 		mondayVbox.setAlignment(Pos.CENTER);
@@ -413,9 +428,9 @@ public class Main extends Application {
 		saturdayVbox.getStyleClass().add("saturday");
 		VBox sundayVbox = new VBox(10,wLabel8,imageView7,wWeather7);
 		sundayVbox.getStyleClass().add("sunday");
-		
-		
-		
+
+
+
 		weatherHBox.getChildren().addAll(mondayVbox,tuesdayVbox,wednesdayVbox,thursdayVbox);
 		weatherVBox.getChildren().addAll(wLabel1,weatherHBox,wMoreButton);
 		weatherVBox.setSpacing(10);
@@ -452,7 +467,7 @@ public class Main extends Application {
 		Button entertainmentButton = new Button("Entertainment");
 		entertainmentButton.getStyleClass().add("nav-button");
 		MenuButton moreButton = new MenuButton("More...");
-		moreButton.getStyleClass().add("nav-button");
+		moreButton.getStyleClass().addAll("nav-button", "menu-button");
 		createDropdownMenu(moreButton);
 
 
@@ -526,16 +541,16 @@ public class Main extends Application {
 		VBox centerBox = new VBox(newsGrid, tabPaneBox);
 		centerBox.setSpacing(40);
 		centerBox.setAlignment(Pos.CENTER);
-		centerBox.setTranslateY(100);
+		centerBox.setTranslateY(0);
 		centerBox.setTranslateX(100);
-		
+
 		VBox rightContentBox = new VBox(weatherVBox, trendingBox, signInBox);
 		rightContentBox.setSpacing(100);
 		rightContentBox.setAlignment(Pos.CENTER);
-		
+
 		StackPane mainCenter = new StackPane(centerBox, rightContentBox);
 		mainCenter.setAlignment(Pos.CENTER);
-		
+
 		//root.setCenter(mainCenter);
 
 		//root.setTranslateX(400);
@@ -654,6 +669,8 @@ public class Main extends Application {
 		// Replace the content of signInBox with the login layout
 		signInBox.getChildren().clear();
 		signInBox.getChildren().add(loginLayout);
+		signInBox.setMinHeight(100); 
+		signInBox.setMaxHeight(100); 
 	}
 	private boolean isValidLogin(String username, String password) {
 		// Implement your login validation logic here
@@ -670,7 +687,7 @@ public class Main extends Application {
 		});
 		signInBox.getChildren().add(signInButton);
 	}
-	//////////////////////////////////////////////////////////////ADD MORE MENU ITEM AND GET CSS COLORS TO MATCH WITH OVERALL SCENE/////////////////////////////////
+
 	private void createDropdownMenu(MenuButton moreButton) {
 		MenuItem adItem = new MenuItem("Advertising");
 		MenuItem helpItem = new MenuItem("Help");
@@ -686,6 +703,11 @@ public class Main extends Application {
 		tabPane.setVisible(visibility);
 		//signInButton.setVisible(visibility);
 		signInBox.setVisible(visibility);
+		signInBox.setManaged(visibility);
+		weatherVBox.setVisible(visibility);
+		weatherVBox.setManaged(visibility);
+		trendingBox.setVisible(visibility);
+		trendingBox.setManaged(visibility);
 	}
 
 
