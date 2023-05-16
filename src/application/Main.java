@@ -92,10 +92,9 @@ public class Main extends Application {
 	
 	
 	//trending article section
-	private String getTrendingSearchUrl(String searchTitle) {
-		// need to replace with logic to get trending searches
-		return "https://www.yahoo.com/news/article/" + searchTitle.replace(" ", "_");
-	}
+	public static String getTrendingSearchUrl(String trendingSearch) {
+	    return "https://www.search.yahoo.com/search?q=" + trendingSearch;
+	    }
 
 	private VBox createTrendingBox() {
 		trendingBox = new VBox();
@@ -125,15 +124,25 @@ public class Main extends Application {
 				"5. Jamie Foxx"
 		};
 
+		webView = new WebView();
+		webEngine = webView.getEngine();
+		
 		for (String searchTitle : trendingSearches) {
 			Text searchText = new Text(searchTitle);
 			searchText.setWrappingWidth(200);
 			searchText.setTextAlignment(TextAlignment.LEFT);
 			searchText.getStyleClass().add("trending-searches");
+			
 			searchText.setOnMouseClicked(event -> {
 				String searchUrl = getTrendingSearchUrl(searchTitle);
 				System.out.println("Clicked on " + searchTitle);
-				getHostServices().showDocument(searchUrl);
+				webEngine.load(searchUrl);
+	            webView.setVisible(true);
+	            webView.toFront();
+	            setComponentsVisibility(false);
+	            closeButton.setVisible(true);
+	            webViewLayout.setVisible(true);
+	            webViewLayout.setManaged(true);
 			});
 
 			searchText.setOnMouseEntered(e -> {
@@ -619,7 +628,10 @@ public class Main extends Application {
 		//textfield sizes
 		usernameField.setMaxWidth(200);
 		passwordField.setMaxWidth(200);
-
+		
+		Label errorMessageLabel = new Label();
+		errorMessageLabel.getStyleClass().add("error-label");
+		
 		// Handle login button click
 		loginButton.setOnAction(e -> {
 			String username = usernameField.getText();
@@ -661,8 +673,11 @@ public class Main extends Application {
 				signInBox.getChildren().clear();
 				signInBox.getChildren().add(welcomeLayout);
 			} else {
+				
+				// Display error message
+				errorMessageLabel.setText("Invalid username or password. Please try again.");
 				System.out.println("Invalid username or password");
-				// Display error message or perform further actions
+				 
 			}
 		});
 
@@ -676,7 +691,7 @@ public class Main extends Application {
 		VBox loginLayout = new VBox(10);
 		loginLayout.setAlignment(Pos.CENTER);
 		loginLayout.setPadding(new Insets(20));
-		loginLayout.getChildren().addAll(usernameLabel, usernameField, passwordLabel, passwordField, loginButton, foldButton);
+		loginLayout.getChildren().addAll(usernameLabel, usernameField, passwordLabel, passwordField, errorMessageLabel, loginButton, foldButton);
 
 		// Replace the content of signInBox with the login layout
 		signInBox.getChildren().clear();
