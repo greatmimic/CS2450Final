@@ -80,42 +80,11 @@ public class Main extends Application {
 	private VBox signInBox;
 	private VBox weatherVBox;
 	private VBox trendingBox;
-
-
-	// Populate tab content
-	private HBox createTabContent(String imagePath1, String title1, String imagePath2, String title2) {
-		ImageView imageView1 = new ImageView(loadImage(imagePath1));
-		imageView1.setFitWidth(200);
-		imageView1.setFitHeight(200);
-
-		Text titleLabel1 = new Text(title1);
-		titleLabel1.setWrappingWidth(200);
-		titleLabel1.setTextAlignment(TextAlignment.CENTER);
-
-		VBox content1 = new VBox(imageView1, titleLabel1);
-		content1.setSpacing(10);
-		content1.setAlignment(Pos.CENTER);
-		content1.setPadding(new Insets(20, 0, 0, 0));
-
-		ImageView imageView2 = new ImageView(loadImage(imagePath2));
-		imageView2.setFitWidth(200);
-		imageView2.setFitHeight(200);
-
-		Text titleLabel2 = new Text(title2);
-		titleLabel2.setWrappingWidth(200);
-		titleLabel2.setTextAlignment(TextAlignment.CENTER);
-
-		VBox content2 = new VBox(imageView2, titleLabel2);
-		content2.setSpacing(10);
-		content2.setAlignment(Pos.CENTER);
-		content2.setPadding(new Insets(20, 0, 0, 0)); 
-
-		HBox tabContent = new HBox(content1, content2);
-		tabContent.setSpacing(20);
-		tabContent.setAlignment(Pos.CENTER);
-
-		return tabContent;
-	}
+	private WebEngine webEngine;
+	private WebView webView;
+	private Button closeButton;
+	private StackPane webViewLayout;
+	private ImageView seeMoreIcon;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -196,6 +165,14 @@ public class Main extends Application {
 		header.setSpacing(0);
 		
 		
+		
+		// Set up see more icon imageView to use later
+		seeMoreIcon = new ImageView(loadImage("/Images/see_more_icon.png"));
+		
+		
+		
+		
+		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////SEARCH BAR AND LOGO////////////////////////////////////////////////////////////////////////////////
 		ImageView yahooLogo = new ImageView(loadImage("/Images/yahoo_logo.png"));
 		yahooLogo.setFitWidth(110);
@@ -242,13 +219,13 @@ public class Main extends Application {
 
 		///////////////////////////////////////////////////////////////////////////////NEWS GRID//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		WebView webView = new WebView();
-		WebEngine webEngine = webView.getEngine();
-		StackPane webViewLayout = new StackPane();
+		webView = new WebView();
+		webEngine = webView.getEngine();
+		webViewLayout = new StackPane();
 		webViewLayout.getChildren().add(webView);
 
 		ImageView closeIcon = new ImageView(loadImage("/Images/close_icon.png"));
-		Button closeButton = new Button("", closeIcon);
+		closeButton = new Button("", closeIcon);
 		webViewLayout.getChildren().add(closeButton);
 		closeButton.setVisible(false);
 		closeButton.setTranslateX(1015);
@@ -348,7 +325,9 @@ public class Main extends Application {
 		});
 
 
-
+		
+		
+		
 
 
 		///////////////////////////////////////////////////////////////////////////////LOGIN INTERFACE//////////////////////////////
@@ -357,7 +336,7 @@ public class Main extends Application {
 		signInBox = new VBox();
 		signInBox.setAlignment(Pos.CENTER);
 
-		Button signInButton = new Button("Sign In");
+		Button signInButton = new Button("Click To Sign-In");
 		signInButton.setPrefHeight(40);
 		signInButton.setPrefWidth(150);
 
@@ -378,8 +357,8 @@ public class Main extends Application {
 		StackPane makeHomepagePane = new StackPane(makeHomepage);
 		makeHomepagePane.setAlignment(Pos.TOP_RIGHT);
 		makeHomepagePane.setPadding(new Insets(10));
-		makeHomepagePane.setTranslateY(-200);
-		makeHomepagePane.setTranslateX(-50);
+		makeHomepagePane.setTranslateY(-220);
+		makeHomepagePane.setTranslateX(-400);
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 
 		
@@ -395,19 +374,25 @@ public class Main extends Application {
 		
 		Label wLabel2 = new Label(" Mon.");
 		Label wWeather1 = new Label(" 81F  55F ");
+		wLabel2.getStyleClass().add("weatherLabel");
 	
 		
 		Label wLabel3 = new Label(" Tue.");
 		Label wWeather2 = new Label(" 73F  56F ");
+		wLabel3.getStyleClass().add("weatherLabel");
+		
 	
 		Label wLabel4 = new Label(" Wed. ");
 		Label wWeather3 = new Label(" 67F   52F ");
-
+		wLabel4.getStyleClass().add("weatherLabel");
+		
+		
 		Label wLabel5 = new Label(" Thur. ");
 		Label wWeather4 = new Label(" 54F  30F ");
-
+		wLabel5.getStyleClass().add("weatherLabel");
 		
 		Button wMoreButton = new Button("See More");
+		wMoreButton.setGraphic(seeMoreIcon);
 		wMoreButton.getStyleClass().add("nav-button");
 		
 		wMoreButton.setOnAction(event -> {
@@ -531,11 +516,11 @@ public class Main extends Application {
 
 		// Create tabs
 		Tab entmtTab = new Tab("Entertainment");
-		Tab foodTab = new Tab("Food");
+		Tab foodTab = new Tab("Health");
 		Tab sportsTab = new Tab("Sports");
 		Tab autoTab = new Tab("Auto");
 		Tab financeTab = new Tab("Finance");
-		Tab fashionTab = new Tab("Fashion");
+		Tab fashionTab = new Tab("Shopping");
 
 
 		// Create TabPane and add tabs to it
@@ -553,12 +538,12 @@ public class Main extends Application {
 		tabPaneBox.setAlignment(Pos.CENTER);
 
 		// Tab content
-		entmtTab.setContent(createTabContent("/Images/entmt_1.png", "Writer Strike 2023 Explained", "/Images/entmt_2.png", "Illegal Twitter Upload of 'Super Mario Bros.'"));
-		foodTab.setContent(createTabContent("/Images/food_1.png", "General Mills Recall on Flour Due To Salmonella", "/Images/food_2.png", "How a Burger Ends Up On Your Plate"));
-		sportsTab.setContent(createTabContent("/Images/sports_1.png", "3 Keys To The Series", "/Images/sports_2.png", "PSG Suspends Messi"));
-		autoTab.setContent(createTabContent("/Images/auto_1.png", "List of Cars Under $20K", "/Images/auto_2.png", "Mustang Plows Into U-HAUL Trailer"));
-		financeTab.setContent(createTabContent("/Images/finance_1.png", "Bankrupt Bed Bath & Beyond Seeks Millions From Ocean Carriers", "/Images/finance_2.png", "Starbucks Beats Earnings and Sales. Why the Stock is Down"));
-		fashionTab.setContent(createTabContent("/Images/fashion_1.png", "What's Trending 2023", "/Images/fashion_2.png", "9 Fresh Ways to Wear Jean Shorts for Summer 2023"));
+		entmtTab.setContent(createTabContent("/Images/entmt_1.png", "Writer Strike 2023 Explained", "/Images/entmt_2.png", "Illegal Twitter Upload of 'Super Mario Bros.'", "https://www.yahoo.com/entertainment/"));
+		foodTab.setContent(createTabContent("/Images/food_1.png", "General Mills Recall on Flour Due To Salmonella", "/Images/food_2.png", "How a Burger Ends Up On Your Plate", "https://www.yahoo.com/lifestyle/tagged/health"));
+		sportsTab.setContent(createTabContent("/Images/sports_1.png", "3 Keys To The Series", "/Images/sports_2.png", "PSG Suspends Messi", "https://sports.yahoo.com/"));
+		autoTab.setContent(createTabContent("/Images/auto_1.png", "List of Cars Under $20K", "/Images/auto_2.png", "Mustang Plows Into U-HAUL Trailer", "https://autos.yahoo.com/"));
+		financeTab.setContent(createTabContent("/Images/finance_1.png", "Bankrupt Bed Bath & Beyond Seeks Millions From Ocean Carriers", "/Images/finance_2.png", "Starbucks Beats Earnings and Sales. Why the Stock is Down", "https://finance.yahoo.com/"));
+		fashionTab.setContent(createTabContent("/Images/fashion_1.png", "What's Trending 2023", "/Images/fashion_2.png", "9 Fresh Ways to Wear Jean Shorts for Summer 2023", "https://shopping.yahoo.com/"));
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -570,7 +555,7 @@ public class Main extends Application {
 		centerBox.setTranslateY(0);
 		centerBox.setTranslateX(100);
 
-		VBox rightContentBox = new VBox(trendingBox, weatherVBox, signInBox);
+		VBox rightContentBox = new VBox(signInBox, trendingBox, weatherVBox);
 		rightContentBox.setSpacing(70);
 		rightContentBox.setAlignment(Pos.CENTER);
 
@@ -700,13 +685,12 @@ public class Main extends Application {
 		signInBox.setMaxHeight(100); 
 	}
 	private boolean isValidLogin(String username, String password) {
-		// Implement your login validation logic here
 		// Return true if the login is valid, false otherwise
 		return username.equals("admin") && password.equals("password");
 	}
 	private void clearLoginInterface(VBox signInBox) {
 		signInBox.getChildren().clear();
-		Button signInButton = new Button("Sign In");
+		Button signInButton = new Button("Click To Sign-In");
 		signInButton.setPrefHeight(40);
 		signInButton.setPrefWidth(150);
 		signInButton.setOnAction(e -> {
@@ -736,6 +720,57 @@ public class Main extends Application {
 		trendingBox.setVisible(visibility);
 		trendingBox.setManaged(visibility);
 	}
+	
+	private HBox createTabContent(String imagePath1, String title1, String imagePath2, String title2, String moreUrl) {
+	    ImageView imageView1 = new ImageView(loadImage(imagePath1));
+	    imageView1.setFitWidth(200);
+	    imageView1.setFitHeight(200);
+
+	    Text titleLabel1 = new Text(title1);
+	    titleLabel1.setWrappingWidth(200);
+	    titleLabel1.setTextAlignment(TextAlignment.CENTER);
+
+	    VBox content1 = new VBox(imageView1, titleLabel1);
+	    content1.setSpacing(10);
+	    content1.setAlignment(Pos.CENTER);
+	    content1.setPadding(new Insets(20, 0, 0, 0));
+
+	    ImageView imageView2 = new ImageView(loadImage(imagePath2));
+	    imageView2.setFitWidth(200);
+	    imageView2.setFitHeight(200);
+
+	    Text titleLabel2 = new Text(title2);
+	    titleLabel2.setWrappingWidth(200);
+	    titleLabel2.setTextAlignment(TextAlignment.CENTER);
+
+	    VBox content2 = new VBox(imageView2, titleLabel2);
+	    content2.setSpacing(10);
+	    content2.setAlignment(Pos.CENTER);
+	    content2.setPadding(new Insets(20, 0, 0, 0));
+	    
+	    
+	    Button seeMoreButton = new Button("See More");
+	    
+	    
+	    
+	    seeMoreButton.getStyleClass().add("see-more-button");
+	    seeMoreButton.setOnAction(event -> {
+	        webEngine.load(moreUrl); // Load the web page in the WebView
+	        webView.setVisible(true);
+	        webView.toFront();
+	        setComponentsVisibility(false);
+	        closeButton.setVisible(true);
+	        webViewLayout.setVisible(true);
+	        webViewLayout.setManaged(true);
+	    });
+
+	    HBox tabContent = new HBox(content1, content2, seeMoreButton);
+	    tabContent.setSpacing(20);
+	    tabContent.setAlignment(Pos.CENTER);
+
+	    return tabContent;
+	}
+
 
 
 }
