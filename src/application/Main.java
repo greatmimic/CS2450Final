@@ -17,12 +17,17 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -118,13 +123,70 @@ public class Main extends Application {
 
 		return tabContent;
 	}
+	
+	//trending article section
+		private String getTrendingSearchUrl(String searchTitle) {
+	        // need to replace with logic to get trending searches
+	        return "https://www.yahoo.com/news/article/" + searchTitle.replace(" ", "_");
+		}
+		
+		private VBox createTrendingBox() {
+		    VBox trendingBox = new VBox();
+		    trendingBox.setSpacing(10);
+		    trendingBox.setPadding(new Insets(10));
+		    trendingBox.setAlignment(Pos.TOP_CENTER);
+			trendingBox.getStyleClass().add("bordered-box");
 
+		    // Add "Trending Now" label
+		    Label trendingLabel = new Label("Trending Now");
+		    trendingLabel.getStyleClass().add("trending-label");
+		    trendingLabel.setAlignment(Pos.CENTER);
+		    trendingBox.getChildren().add(trendingLabel);
+
+		    // Add black outline to the VBox
+		    trendingBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,
+		            null, new BorderWidths(1))));
+
+		    // Populate with trending Searches
+		    String[] trendingSearches = {
+		        "1. The Voice",
+		        "2. New Mexico Shooting",
+		        "3. Ja Morant",
+		        "4. Shark Attacks Kayak",
+		        "5. Jamie Foxx"
+		    };
+
+		    for (String searchTitle : trendingSearches) {
+		        Text searchText = new Text(searchTitle);
+		        searchText.setWrappingWidth(200);
+		        searchText.setTextAlignment(TextAlignment.LEFT);
+		        searchText.setOnMouseClicked(event -> {
+		            String searchUrl = getTrendingSearchUrl(searchTitle);
+		            System.out.println("Clicked on " + searchTitle);
+		            getHostServices().showDocument(searchUrl);
+		        });
+		        
+		        searchText.setOnMouseEntered(e -> {
+		            searchText.setFill(Color.PURPLE);
+		        });
+		        
+		        searchText.setOnMouseExited(e -> {
+		            searchText.setFill(Color.BLACK);
+		        });
+
+		        trendingBox.getChildren().add(searchText);
+		    }
+
+		    return trendingBox;
+		}
 
 	@Override
 	public void start(Stage primaryStage) {
+		VBox trendingBox = createTrendingBox();
+		
 		BorderPane mainLayout = new BorderPane();
 		GridPane root = new GridPane();
-
+		
 		// Header section with Yahoo logo and search bar
 		HBox header = new HBox();
 		header.setPadding(new Insets(20, 0, 0, 0));
@@ -187,7 +249,6 @@ public class Main extends Application {
 		closeButton.setVisible(false);
 		closeButton.setTranslateX(1015);
 		closeButton.setTranslateY(-360);
-		closeButton.getStyleClass().add("nav-button");
 		
 		
 		
@@ -208,8 +269,6 @@ public class Main extends Application {
 				{"CBS", "/Images/cbs_icon.png", "https://cbsnews.com"},
 
 		};
-		
-//		Fox news can't be opened using webview through javaFX
 
 		//table of news grid pane
 		newsGrid = new GridPane();
@@ -264,6 +323,8 @@ public class Main extends Application {
 			webViewLayout.setManaged(false);
 			// Show other controls
 			setComponentsVisibility(true);
+			
+			System.out.println("button working");
 		});
 		
 		
@@ -300,13 +361,10 @@ public class Main extends Application {
 		makeHomepagePane.setTranslateY(-200);
 		makeHomepagePane.setTranslateX(-50);
 
-
-
-
+		
+		//weather
 		HBox weatherHBox = new HBox();
 		VBox weatherVBox = new VBox();
-		
-		
 		
 		Image image = new Image("file:/C:/Users/Huy/Pictures/Weather.PNG");
 		ImageView imageView = new ImageView(image);
@@ -363,8 +421,11 @@ public class Main extends Application {
 		weatherVBox.setSpacing(10);
 		weatherHBox.setSpacing(10);
 		wLabel1.setAlignment(Pos.CENTER);
-		weatherVBox.setAlignment(Pos.TOP_RIGHT);
-		weatherHBox.setAlignment(Pos.TOP_RIGHT);
+		weatherVBox.setAlignment(Pos.CENTER);
+		weatherHBox.setAlignment(Pos.CENTER);
+
+
+
 
 		///////////////////////////////////////////////////////////////////////////////NAVIGATION BUTTONS///////////////////////////////////////////////////////////////////////////
 
@@ -419,7 +480,7 @@ public class Main extends Application {
 
 
 		VBox topSection = new VBox();
-		topSection.getChildren().addAll(header, navBox, imageBanner, makeHomepagePane,  weatherVBox);
+		topSection.getChildren().addAll(header, navBox, imageBanner, makeHomepagePane);
 
 		mainLayout.setTop(topSection);
 		mainLayout.setCenter(root);
@@ -461,16 +522,20 @@ public class Main extends Application {
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
 		// Add tabPane and newsGrid to the center of the BorderPane
 		VBox centerBox = new VBox(newsGrid, tabPaneBox);
 		centerBox.setSpacing(40);
 		centerBox.setAlignment(Pos.CENTER);
 		centerBox.setTranslateY(100);
 		centerBox.setTranslateX(100);
-
-		StackPane mainCenter = new StackPane(centerBox);
+		
+		VBox rightContentBox = new VBox(weatherVBox, trendingBox, signInBox);
+		rightContentBox.setSpacing(20);
+		rightContentBox.setAlignment(Pos.CENTER);
+		
+		StackPane mainCenter = new StackPane(centerBox, rightContentBox);
 		mainCenter.setAlignment(Pos.CENTER);
+		
 		//root.setCenter(mainCenter);
 
 		//root.setTranslateX(400);
@@ -489,9 +554,9 @@ public class Main extends Application {
 		GridPane.setConstraints(mainCenter, 0, 0);
 
 		// Add signInArea to the second column of the GridPane
-		GridPane.setConstraints(signInBox, 1, 0);
+		GridPane.setConstraints(rightContentBox, 1, 0);
 
-		root.getChildren().addAll(mainCenter, signInBox);
+		root.getChildren().addAll(mainCenter, rightContentBox);
 
 
 

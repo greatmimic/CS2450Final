@@ -1,4 +1,15 @@
+.bordered-box {
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-padding: 10px;
+    -fx-max-width: 200px; /* Set the maximum width */
+    -fx-max-height: 100px; /* Set the maximum height */
+}
 
+.trending-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
 
 .search-box {
     -fx-background-color: white;
@@ -15,6 +26,24 @@
     -fx-text-fill: white;
     -fx-padding: 5px;
 }
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: BLACK;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    
+}
+.nav-button:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: #720e9e;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.news-company-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
 
 .weather{
 	
@@ -96,25 +125,6 @@
      -fx-border-color: purple;
 }
 
-.nav-button {
-    -fx-background-color: transparent;
-    -fx-text-fill: BLACK;
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    
-}
-.nav-button:hover {
-    -fx-background-color: transparent;
-    -fx-text-fill: #720e9e;
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-}
-.news-company-label {
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-
-}
 .logo-button {
     -fx-background-color: WHITE; /* Change the background color as desired */
     -fx-border-color: #BDBDBD; /* Change the border color as desired */
