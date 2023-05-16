@@ -16,6 +16,86 @@
     -fx-padding: 5px;
 }
 
+.weather{
+	
+	-fx-background-color:#CBC3E3;
+	-fx-text-fill: purple;
+	-fx-max-width:335;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+     -fx-border-color: purple;
+}
+
+.monday{
+	
+	-fx-background-color:#CBC3E3;
+	-fx-text-fill: purple;
+	-fx-max-width:150;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+     -fx-border-color: purple;
+}
+.tuesday{
+	-fx-background-color:#CBC3E3;
+	-fx-text-fill: #c40000;
+	-fx-max-width:150;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+     -fx-border-color: purple;
+}
+.wednesday{
+	-fx-background-color:#CBC3E3;
+	-fx-text-fill: #c40000;
+	-fx-max-width:150;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+     -fx-border-color: purple;
+}
+
+.thursday{
+	-fx-background-color:#CBC3E3;
+	-fx-text-fill: #c40000;
+	-fx-max-width:150;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+     -fx-border-color: purple;
+}
+
+.friday{
+	-fx-background-color:#CBC3E3;
+	-fx-text-fill: #c40000;
+	-fx-max-width:150;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+     -fx-border-color: purple;
+}
+
+.saturday{
+	-fx-background-color:#CBC3E3;
+	-fx-text-fill: #c40000;
+	-fx-max-width:150;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+     -fx-border-color: purple;
+}
+
+.sunday{
+	-fx-background-color:#CBC3E3;
+	-fx-text-fill: #c40000;
+	-fx-max-width:150;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+     -fx-border-color: purple;
+}
+
 .nav-button {
     -fx-background-color: transparent;
     -fx-text-fill: BLACK;

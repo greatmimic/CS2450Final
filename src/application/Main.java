@@ -303,7 +303,68 @@ public class Main extends Application {
 
 
 
-
+		HBox weatherHBox = new HBox();
+		VBox weatherVBox = new VBox();
+		
+		
+		
+		Image image = new Image("file:/C:/Users/Huy/Pictures/Weather.PNG");
+		ImageView imageView = new ImageView(image);
+		ImageView imageView2 = new ImageView(image);
+		ImageView imageView3 = new ImageView(image);
+		ImageView imageView4 = new ImageView(image);
+		ImageView imageView5 = new ImageView(image);
+		ImageView imageView6 = new ImageView(image);
+		ImageView imageView7 = new ImageView(image);
+		
+		Label wLabel1 = new Label("Weather");
+		wLabel1.getStyleClass().add("weather");
+		
+		Label wLabel2 = new Label(" Monday");
+		
+		Label wWeather1 = new Label(" 81F  55F ");
+		Label wLabel3 = new Label(" Tuesday");
+		Label wWeather2 = new Label(" 81F  56F ");
+		Label wLabel4 = new Label(" Wednesday ");
+		Label wWeather3 = new Label(" 84F   58F ");
+		Label wLabel5 = new Label(" Thursday ");
+		Label wWeather4 = new Label(" 85F  56F ");
+		Label wLabel6 = new Label("Friday");
+		Label wWeather5 = new Label("80F");
+		Label wLabel7 = new Label("Saturday");
+		Label wWeather6 = new Label("72F");
+		Label wLabel8 = new Label("Sunday");
+		Label wWeather7 = new Label("87F");
+		Button wMoreButton = new Button("See More");
+		
+		VBox mondayVbox = new VBox(10,wLabel2,imageView,wWeather1);
+		mondayVbox.getStyleClass().add("monday");
+		mondayVbox.setAlignment(Pos.CENTER);
+		VBox tuesdayVbox = new VBox(10,wLabel3,imageView2,wWeather2);
+		tuesdayVbox.getStyleClass().add("tuesday");
+		tuesdayVbox.setAlignment(Pos.CENTER);
+		VBox wednesdayVbox = new VBox(10,wLabel4,imageView3,wWeather3);
+		wednesdayVbox.getStyleClass().add("wednesday");
+		wednesdayVbox.setAlignment(Pos.CENTER);
+		VBox thursdayVbox = new VBox(10,wLabel5,imageView4,wWeather4);
+		thursdayVbox.getStyleClass().add("thursday");
+		thursdayVbox.setAlignment(Pos.CENTER);
+		VBox fridayVbox = new VBox(10,wLabel6,imageView5,wWeather5);
+		fridayVbox.getStyleClass().add("friday");
+		VBox saturdayVbox = new VBox(10,wLabel7,imageView6,wWeather6);
+		saturdayVbox.getStyleClass().add("saturday");
+		VBox sundayVbox = new VBox(10,wLabel8,imageView7,wWeather7);
+		sundayVbox.getStyleClass().add("sunday");
+		
+		
+		
+		weatherHBox.getChildren().addAll(mondayVbox,tuesdayVbox,wednesdayVbox,thursdayVbox);
+		weatherVBox.getChildren().addAll(wLabel1,weatherHBox,wMoreButton);
+		weatherVBox.setSpacing(10);
+		weatherHBox.setSpacing(10);
+		wLabel1.setAlignment(Pos.CENTER);
+		weatherVBox.setAlignment(Pos.TOP_RIGHT);
+		weatherHBox.setAlignment(Pos.TOP_RIGHT);
 
 		///////////////////////////////////////////////////////////////////////////////NAVIGATION BUTTONS///////////////////////////////////////////////////////////////////////////
 
@@ -358,7 +419,7 @@ public class Main extends Application {
 
 
 		VBox topSection = new VBox();
-		topSection.getChildren().addAll(header, navBox, imageBanner, makeHomepagePane);
+		topSection.getChildren().addAll(header, navBox, imageBanner, makeHomepagePane,  weatherVBox);
 
 		mainLayout.setTop(topSection);
 		mainLayout.setCenter(root);

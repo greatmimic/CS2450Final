@@ -1,11 +1,7 @@
-.yahoo-text {
-    -fx-font-size: 40px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #6f2dbd;
-}
+
 
 .search-box {
-    -fx-background-color: #eee;
+    -fx-background-color: white;
     -fx-padding: 10px;
     -fx-border-radius: 25px;
     -fx-border-color: #ccc;
@@ -13,25 +9,106 @@
 }
 
 .search-box .search-button {
-    -fx-background-color: #6f2dbd;
+    -fx-background-color: #720e9e;
     -fx-background-radius: 5px;
     -fx-background-insets: 0;
     -fx-text-fill: white;
     -fx-padding: 5px;
 }
 
-.nav-button {
-    -fx-background-color: transparent;
-    -fx-text-fill: #6f2dbd;
-    -fx-font-size: 18px;
+.weather{
+	
+	-fx-background-color:#CBC3E3;
+	-fx-text-fill: purple;
+	-fx-max-width:335;
+    -fx-font-size: 15px;
     -fx-font-weight: bold;
+    -fx-cursor: hand;
+     -fx-border-color: purple;
 }
 
-.nav-button:hover {
+.monday{
+	
+	-fx-background-color:#CBC3E3;
+	-fx-text-fill: purple;
+	-fx-max-width:150;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+     -fx-border-color: purple;
+}
+.tuesday{
+	-fx-background-color:#CBC3E3;
+	-fx-text-fill: #c40000;
+	-fx-max-width:150;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+     -fx-border-color: purple;
+}
+.wednesday{
+	-fx-background-color:#CBC3E3;
+	-fx-text-fill: #c40000;
+	-fx-max-width:150;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+     -fx-border-color: purple;
+}
+
+.thursday{
+	-fx-background-color:#CBC3E3;
+	-fx-text-fill: #c40000;
+	-fx-max-width:150;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+     -fx-border-color: purple;
+}
+
+.friday{
+	-fx-background-color:#CBC3E3;
+	-fx-text-fill: #c40000;
+	-fx-max-width:150;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+     -fx-border-color: purple;
+}
+
+.saturday{
+	-fx-background-color:#CBC3E3;
+	-fx-text-fill: #c40000;
+	-fx-max-width:150;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+     -fx-border-color: purple;
+}
+
+.sunday{
+	-fx-background-color:#CBC3E3;
+	-fx-text-fill: #c40000;
+	-fx-max-width:150;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+     -fx-border-color: purple;
+}
+
+.nav-button {
     -fx-background-color: transparent;
-    -fx-text-fill: #c40000;
+    -fx-text-fill: BLACK;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
+    
+}
+.nav-button:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: #720e9e;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
 }
 .news-company-label {
     -fx-font-size: 14px;
@@ -39,12 +116,30 @@
 
 }
 .logo-button {
-    -fx-background-color: #E0E0E0; /* Change the background color as desired */
+    -fx-background-color: WHITE; /* Change the background color as desired */
     -fx-border-color: #BDBDBD; /* Change the border color as desired */
     -fx-border-width: 1px;
-    -fx-padding: 5px;
+    -fx-padding: 1px;
     -fx-background-radius: 0;
 }
 .logo-button:hover {
-    -fx-background-color: #BDBDBD; /* Change the hover background color as desired */
+    -fx-background-color: #BDBDBD;
+    -fx-border-color:  #720e9e;/* Change the hover background color as desired */
+}
+.ad-banner:hover {
+    -fx-cursor: hand;
+}
+
+.tab-pane .tab-header-background {
+    -fx-background-color: transparent;
+}
+
+.tab-pane .tab-header-area .headers-region .tab {
+    -fx-padding: 10px;
+    -fx-focus-color: transparent;
+}
+
+
+.root{
+	-fx-background-color: white;
 }
