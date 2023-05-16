@@ -41,7 +41,7 @@ import javafx.scene.web.*;
 
 public class Main extends Application {
 
-	//load image
+	// Load image from Resource
 	private Image loadImage(String imagePath) {
 		try {
 			InputStream imageStream = getClass().getResourceAsStream(imagePath);
@@ -55,7 +55,7 @@ public class Main extends Application {
 		}
 	}
 
-	//Get news company url from icon
+	// Get news company url from icon
 	private String getNewsCompanyUrl(String newsCompanyName) {
 		switch (newsCompanyName) {
 		case "CNN":
@@ -92,73 +92,74 @@ public class Main extends Application {
 	
 	
 	//trending article section
-	public static String getTrendingSearchUrl(String trendingSearch) {
-	    return "https://www.search.yahoo.com/search?q=" + trendingSearch;
-	    }
+		public static String getTrendingSearchUrl(String trendingSearch) {
+		    return "https://www.search.yahoo.com/search?q=" + trendingSearch;
+		    }
 
-	private VBox createTrendingBox() {
-		trendingBox = new VBox();
-		trendingBox.setSpacing(10);
-		trendingBox.setPadding(new Insets(10));
-		trendingBox.setAlignment(Pos.TOP_CENTER);
-		trendingBox.setMinWidth(400);
-		trendingBox.getStyleClass().add("trending-bordered-box");
+		private VBox createTrendingBox() {
+			trendingBox = new VBox();
+			trendingBox.setSpacing(10);
+			trendingBox.setPadding(new Insets(10));
+			trendingBox.setAlignment(Pos.TOP_CENTER);
+			trendingBox.setMinWidth(400);
+			trendingBox.getStyleClass().add("trending-bordered-box");
 
-		// Add "Trending Now" label
-		Label trendingLabel = new Label("Trending Now");
-		trendingLabel.setMinWidth(380);
-		trendingLabel.getStyleClass().add("trending-label");
-		trendingLabel.setAlignment(Pos.CENTER);
-		trendingBox.getChildren().add(trendingLabel);
+			// Add "Trending Now" label
+			Label trendingLabel = new Label("Trending Now");
+			trendingLabel.setMinWidth(380);
+			trendingLabel.getStyleClass().add("trending-label");
+			trendingLabel.setAlignment(Pos.CENTER);
+			trendingBox.getChildren().add(trendingLabel);
 
-		// Add black outline to the VBox
-		trendingBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,
-				null, new BorderWidths(1))));
+			// Add black outline to the VBox
+			trendingBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,
+					null, new BorderWidths(1))));
 
-		// Populate with trending Searches
-		String[] trendingSearches = {
-				"1. The Voice",
-				"2. New Mexico Shooting",
-				"3. Ja Morant",
-				"4. Shark Attacks Kayak",
-				"5. Jamie Foxx"
-		};
+			// Populate with trending Searches
+			String[] trendingSearches = {
+					"1. The Voice",
+					"2. New Mexico Shooting",
+					"3. Ja Morant",
+					"4. Shark Attacks Kayak",
+					"5. Jamie Foxx"
+			};
 
-		webView = new WebView();
-		webEngine = webView.getEngine();
-		
-		for (String searchTitle : trendingSearches) {
-			Text searchText = new Text(searchTitle);
-			searchText.setWrappingWidth(200);
-			searchText.setTextAlignment(TextAlignment.LEFT);
-			searchText.getStyleClass().add("trending-searches");
+			webView = new WebView();
+			webEngine = webView.getEngine();
 			
-			searchText.setOnMouseClicked(event -> {
-				String searchUrl = getTrendingSearchUrl(searchTitle);
-				System.out.println("Clicked on " + searchTitle);
-				webEngine.load(searchUrl);
-	            webView.setVisible(true);
-	            webView.toFront();
-	            setComponentsVisibility(false);
-	            closeButton.setVisible(true);
-	            webViewLayout.setVisible(true);
-	            webViewLayout.setManaged(true);
-			});
+			for (String searchTitle : trendingSearches) {
+				Text searchText = new Text(searchTitle);
+				searchText.setWrappingWidth(200);
+				searchText.setTextAlignment(TextAlignment.LEFT);
+				searchText.getStyleClass().add("trending-searches");
+				
+				searchText.setOnMouseClicked(event -> {
+					String searchUrl = getTrendingSearchUrl(searchTitle);
+					System.out.println("Clicked on " + searchTitle);
+					webEngine.load(searchUrl);
+		            webView.setVisible(true);
+		            webView.toFront();
+		            setComponentsVisibility(false);
+		            closeButton.setVisible(true);
+		            webViewLayout.setVisible(true);
+		            webViewLayout.setManaged(true);
+				});
 
-			searchText.setOnMouseEntered(e -> {
-				searchText.setFill(Color.PURPLE);
-				searchText.setCursor(Cursor.HAND);
-			});
+				searchText.setOnMouseEntered(e -> {
+					searchText.setFill(Color.PURPLE);
+					searchText.setCursor(Cursor.HAND);
+				});
 
-			searchText.setOnMouseExited(e -> {
-				searchText.setFill(Color.BLACK);
-			});
+				searchText.setOnMouseExited(e -> {
+					searchText.setFill(Color.BLACK);
+				});
 
-			trendingBox.getChildren().add(searchText);
+				trendingBox.getChildren().add(searchText);
+			}
+
+			return trendingBox;
 		}
 
-		return trendingBox;
-	}
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -214,13 +215,9 @@ public class Main extends Application {
 		HBox searchBox = new HBox(searchBar, searchButton);
 		searchBox.setAlignment(Pos.CENTER);
 		searchBox.getStyleClass().add("search-box");
-		HBox.setMargin(searchBox, new Insets(0, 0, 0, 10)); // Add left margin of 10 pixels
+		HBox.setMargin(searchBox, new Insets(0, 0, 0, 10)); 
 
 
-		// Handle mouse click events on the BorderPane to remove focus from search bar
-		//		root.addEventFilter(MouseEvent.MOUSE_CLICKED, (event) -> {
-		//			searchBar.getParent().requestFocus(); // Remove focus from search bar
-		//		});
 
 
 		header.getChildren().addAll(yahooLogo,  searchBox);
@@ -246,18 +243,11 @@ public class Main extends Application {
 		    Object scrollYObj = webView.getEngine().executeScript("window.pageYOffset");
 		    if (scrollYObj instanceof Number) {
 		        double scrollY = ((Number) scrollYObj).doubleValue();
-		        scrollY -= deltaY * 10; // Adjust scroll speed by changing the multiplier (40 in this example)
+		        scrollY -= deltaY * 10; // Adjust scroll speed 
 		        webView.getEngine().executeScript("window.scrollTo(0, " + scrollY + ")");
 		    }
 		    event.consume();
 		});
-
-
-
-
-
-
-
 
 		// Initially webView is not visible
 		root.getChildren().add(webViewLayout);
@@ -266,7 +256,7 @@ public class Main extends Application {
 		webView.setTranslateX(500);
 		webView.setTranslateY(-30);
 
-		//news companies
+		// News companies
 		String[][] newsCompanies = {
 				{"CNN", "/Images/cnn_icon.png", "https://www.cnn.com"},
 				{"BBC", "/Images/bbc_icon.png", "https://www.bbc.com"},
@@ -277,7 +267,7 @@ public class Main extends Application {
 
 		};
 
-		//table of news grid pane
+		// Table of news grid pane
 		newsGrid = new GridPane();
 		newsGrid.setHgap(20);
 		newsGrid.setVgap(20);
@@ -341,7 +331,7 @@ public class Main extends Application {
 
 		///////////////////////////////////////////////////////////////////////////////LOGIN INTERFACE//////////////////////////////
 
-		//Login Interface
+		// Login Interface
 		signInBox = new VBox();
 		signInBox.setAlignment(Pos.CENTER);
 
@@ -571,9 +561,6 @@ public class Main extends Application {
 		StackPane mainCenter = new StackPane(centerBox, rightContentBox);
 		mainCenter.setAlignment(Pos.CENTER);
 
-		//root.setCenter(mainCenter);
-
-		//root.setTranslateX(400);
 
 
 		// Set column constraints for the GridPane to distribute space evenly
@@ -625,7 +612,7 @@ public class Main extends Application {
 		Button loginButton = new Button("Login");
 		Button foldButton = new Button("Fold");
 
-		//textfield sizes
+		// Textfield sizes
 		usernameField.setMaxWidth(200);
 		passwordField.setMaxWidth(200);
 		
@@ -650,9 +637,9 @@ public class Main extends Application {
 				Button myAccountButton = new Button("My Account");
 				myAccountButton.setStyle("-fx-font-weight: bold; -fx-font-size: 12px;");
 
-				// Add action for "My Account" hyperlink
+				// Add action for "My Account" 
 				myAccountButton.setOnAction(event -> {
-					// Perform actions when "My Account" is clicked
+					// Test msg
 					System.out.println("My Account clicked");
 
 				});
@@ -663,7 +650,7 @@ public class Main extends Application {
 					clearLoginInterface(signInBox);
 				});
 
-				// Create layout for the welcome message and "My Account" hyperlink
+				// Create layout for the welcome message and "My Account" 
 				VBox welcomeLayout = new VBox(10);
 				welcomeLayout.setAlignment(Pos.CENTER);
 				welcomeLayout.setPadding(new Insets(20));
@@ -707,7 +694,7 @@ public class Main extends Application {
 		signInBox.getChildren().clear();
 		Button signInButton = new Button("Click To Sign-In");
 		signInButton.setPrefHeight(40);
-		signInButton.setPrefWidth(150);
+		signInButton.setPrefWidth(150);	
 		signInButton.setOnAction(e -> {
 			showLoginInterface(signInBox);
 		});
@@ -727,7 +714,6 @@ public class Main extends Application {
 	private void setComponentsVisibility(boolean visibility) {
 		newsGrid.setVisible(visibility);
 		tabPane.setVisible(visibility);
-		//signInButton.setVisible(visibility);
 		signInBox.setVisible(visibility);
 		signInBox.setManaged(visibility);
 		weatherVBox.setVisible(visibility);
