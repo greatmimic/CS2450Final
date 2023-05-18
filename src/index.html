@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>JavaFX Application</title>
+  <style>
+    /* Define styles for the elements */
+    .search-box {
+      -fx-spacing: 10px;
+      -fx-alignment: center;
+    }
+
+    .search-button {
+      -fx-background-color: transparent;
+      -fx-border-width: 0;
+      -fx-cursor: pointer;
+    }
+
+    .nav-button {
+      -fx-background-color: transparent;
+      -fx-border-width: 0;
+      -fx-cursor: pointer;
+    }
+
+    .menu-button {
+      -fx-background-color: transparent;
+      -fx-border-width: 0;
+      -fx-cursor: pointer;
+    }
+
+    .ad-banner {
+      -fx-preserve-ratio: true;
+    }
+
+    .weather {
+      -fx-font-size: 18px;
+    }
+
+    .weatherLabel {
+      -fx-font-size: 14px;
+    }
+
+    .monday {
+      -fx-spacing: 10px;
+      -fx-alignment: center;
+    }
+
+    .trending-bordered-box {
+      -fx-border-color: black;
+      -fx-border-width: 1;
+      -fx-border-style: solid;
+      -fx-padding: 10px;
+    }
+
+    .trending-label {
+      -fx-font-size: 16px;
+      -fx-font-weight: bold;
+    }
+
+    .trending-searches {
+      -fx-cursor: pointer;
+      -fx-fill: black;
+    }
+
+    .logo-button {
+      -fx-background-color: transparent;
+      -fx-border-width: 0;
+      -fx-cursor: pointer;
+    }
+
+    .make-homepage {
+      -fx-font-weight: bold;
+      -fx-font-size: 16px;
+    }
+
+    .error-label {
+      -fx-text-fill: red;
+      -fx-font-size: 14px;
+    }
+
+    .content-box {
+      -fx-border-color: black;
+      -fx-border-width: 1;
+      -fx-border-style: solid;
+      -fx-padding: 10px;
+    }
+
+    .see-more-button {
+      -fx-background-color: transparent;
+      -fx-border-width: 1;
+      -fx-border-color: black;
+      -fx-cursor: pointer;
+      -fx-font-weight: bold;
+      -fx-font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <script src="https://openjfx.io/JavaFX.js"></script>
+  <div id="root"></div>
+
+  <script>
+    function start(Stage) {
+      with (JavaFX) {
+        var StackPane = javafx.scene.layout.StackPane;
+        var Scene = javafx.scene.Scene;
+        var WebView = javafx.scene.web.WebView;
+        var WebEngine = javafx.scene.web.WebEngine;
+        var GridPane = javafx.scene.layout.GridPane;
+        var Label = javafx.scene.control.Label;
+        var Button = javafx.scene.control.Button;
+        var HBox = javafx.scene.layout.HBox;
+
+        // Create the JavaFX application
+        var app = new JavaAdapter(Application, {
+          start: function (primaryStage) {
+            // JavaFX application logic goes here
+          }
+        });
+
+        // Launch the JavaFX application
+        launch(app, []);
+      }
+    }
+  </script>
+  <script>
+    // Place your JavaFX application logic here
+    start(JavaFX.Stage);
+  </script>
+</body>
+
+</html>
